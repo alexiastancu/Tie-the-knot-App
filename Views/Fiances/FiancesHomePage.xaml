@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Wedding_Planning_App.ViewModels.Fiances"
+             x:Class="Wedding_Planning_App.Views.Fiances.FiancesHomePage"
+             Title="FiancesHomePage">
+    <ContentPage.BindingContext>
+        <vm:FiancesHomepageVM />
+    </ContentPage.BindingContext>
+    <VerticalStackLayout>
+        <Frame BackgroundColor="{StaticResource Primary}" CornerRadius="20" Padding="10" Margin="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Title -->
+                <Label Text="Wedding Countdown"
+                       Grid.Row="0" Grid.ColumnSpan="4"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       FontSize="Medium"
+                       TextColor="White" />
+
+                <!-- Days -->
+                <Label Text="{Binding Years}"
+                       Grid.Row="1" Grid.Column="0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       FontSize="Large"
+                       TextColor="White" />
+                <Label Text="YEARS"
+                       Grid.Row="2" Grid.Column="0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontSize="Small"
+                       TextColor="White" />
+
+                <!-- Hours -->
+                <Label Text="{Binding Months}"
+                       Grid.Row="1" Grid.Column="1"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       FontSize="Large"
+                       TextColor="White" />
+                <Label Text="MONTHS"
+                       Grid.Row="2" Grid.Column="1"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontSize="Small"
+                       TextColor="White" />
+
+                <!-- Minutes -->
+                <Label Text="{Binding Weeks}"
+                       Grid.Row="1" Grid.Column="2"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       FontSize="Large"
+                       TextColor="White" />
+                <Label Text="WEEKS"
+                       Grid.Row="2" Grid.Column="2"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontSize="Small"
+                       TextColor="White" />
+
+                <!-- Seconds -->
+                <Label Text="{Binding Days}"
+                       Grid.Row="1" Grid.Column="3"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       FontSize="Large"
+                       TextColor="White" />
+                <Label Text="DAYS"
+                       Grid.Row="2" Grid.Column="3"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontSize="Small"
+                       TextColor="White" />
+            </Grid>
+        </Frame>
+    </VerticalStackLayout>
+</ContentPage>

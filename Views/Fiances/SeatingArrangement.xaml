@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Wedding_Planning_App.Views.Fiances.SeatingArrangement"
+             Title="SeatingArrangement">
+    <VerticalStackLayout Padding="20">
+        <!-- Table Picker -->
+        <Label Text="Select Table:" FontAttributes="Bold" />
+        <Picker ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable}" />
+
+        <!-- Seating Layout -->
+        <Grid x:Name="SeatingLayout" Padding="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+            <AbsoluteLayout HeightRequest="300" WidthRequest="300">
+                <!-- Circle representing the table -->
+                <Ellipse Fill="White" HeightRequest="150" WidthRequest="150" AbsoluteLayout.LayoutBounds="0.5,0.5,150,150" AbsoluteLayout.LayoutFlags="PositionProportional" />
+                <!-- Guest seating positions -->
+                <Button x:Name="Seat1"
+                        Text="{Binding SelectedTable.Seats[0].GuestName}"
+                        BackgroundColor="{Binding SelectedTable.Seats[0].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
+                        Margin="0,0,0,40"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        AbsoluteLayout.LayoutBounds="0.5,0.1,60,60"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" />
+                <Button x:Name="Seat2"
+                        Text="{Binding SelectedTable.Seats[1].GuestName}"
+                        BackgroundColor="{Binding SelectedTable.Seats[1].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
+                        Margin="0,40,0,0"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        AbsoluteLayout.LayoutBounds="0.5,0.9,60,60"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" />
+                <Button x:Name="Seat3"
+                        Text="{Binding SelectedTable.Seats[2].GuestName}"
+                        BackgroundColor="{Binding SelectedTable.Seats[2].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
+                        Margin="0,0,40,0"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        AbsoluteLayout.LayoutBounds="0.1,0.5,60,60"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" />
+                <Button x:Name="Seat4"
+                        Text="{Binding SelectedTable.Seats[3].GuestName}"
+                        BackgroundColor="{Binding SelectedTable.Seats[3].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
+                        Margin="40,0,0,0"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        AbsoluteLayout.LayoutBounds="0.9,0.5,60,60"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" />
+                <!-- Diagonal seating positions -->
+                <Button x:Name="Seat5"
+                        Text="{Binding SelectedTable.Seats[4].GuestName}"
+                        BackgroundColor="{Binding SelectedTable.Seats[4].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
+                        Margin="0,0,50,50"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        Rotation="45"
+                        AbsoluteLayout.LayoutBounds="0.25,0.25,60,60"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" />
+                <Button x:Name="Seat6"
+                        Text="{Binding SelectedTable.Seats[5].GuestName}"
+                        BackgroundColor="{Binding SelectedTable.Seats[5].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
+                        Margin="50,0,0,50"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        Rotation="45"
+                        AbsoluteLayout.LayoutBounds="0.75,0.25,60,60"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" />
+                <Button x:Name="Seat7"
+                        Text="{Binding SelectedTable.Seats[6].GuestName}"
+                        BackgroundColor="{Binding SelectedTable.Seats[6].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
+                        Margin="0,50,50,0"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        Rotation="45"
+                        AbsoluteLayout.LayoutBounds="0.25,0.75,60,60"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" />
+                <Button x:Name="Seat8"
+                        Text="{Binding SelectedTable.Seats[7].GuestName}"
+                        BackgroundColor="{Binding SelectedTable.Seats[7].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
+                        Margin="50,50,0,0"
+                        WidthRequest="50"
+                        HeightRequest="50"
+                        Rotation="45"
+                        AbsoluteLayout.LayoutBounds="0.75,0.75,60,60"
+                        AbsoluteLayout.LayoutFlags="PositionProportional" />
+            </AbsoluteLayout>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

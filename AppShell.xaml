@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="Wedding_Planning_App.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Wedding_Planning_App"
+    xmlns:views="clr-namespace:Wedding_Planning_App.Views"
+    Shell.TabBarIsVisible="False"
+    Title="Wedding_Planning_App">
+
+
+    <ShellContent
+        ContentTemplate="{DataTemplate views:LoadingPage}"
+        Route="loading" />
+    
+    <ShellContent
+        Title="Sign in page"
+        ContentTemplate="{DataTemplate views:SignIn}"
+        Route="SignIn" />
+
+    <ShellContent
+        Title="Sign up page"
+        ContentTemplate="{DataTemplate views:SignUp}"
+        Route="SignUp" />
+
+
+</Shell>

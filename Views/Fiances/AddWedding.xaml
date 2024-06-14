@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Wedding_Planning_App.Views.Fiances.AddWedding"
+            xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+            Title="Add Wedding">
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <DatePicker x:Name="datePicker"
+                Date="{Binding WeddingDate}"
+                Format="dd/MM/yyyy"/>
+
+            <Entry x:Name="budgetEntry"
+           Text="{Binding Budget}"
+           Keyboard="Numeric"
+           Placeholder="Enter budget"/>
+
+            <HorizontalStackLayout Margin="0,0,0,10">
+                <Entry  x:Name="locationEntry"
+                        Text="{Binding Location}"
+                        Placeholder="Enter location"
+                        WidthRequest="220"
+                        HeightRequest="70"/>
+                <Button Text="Search Location"
+                        Command="{Binding SearchLocationCommand}"
+                        CommandParameter="{Binding Source={x:Reference locationEntry}, Path=Text}"
+                        CornerRadius="10"
+                        Margin="0,20,0,0"
+                        VerticalOptions="Center"
+                        FontSize="15"/>
+            </HorizontalStackLayout>
+
+            <maps:Map x:Name="map" HeightRequest="400" WidthRequest="350" IsZoomEnabled='True'  />
+
+            <Entry x:Name="guestEntry"
+           Text="{Binding NumberOfGuests}"
+           Keyboard="Numeric"
+           Placeholder="Estimated number of guests"/>
+
+            <!--<Entry x:Name="themeEntry"
+           Text="{Binding Theme}"
+           Placeholder="Theme/Color Palette"/>-->
+
+            <Picker x:Name="AttirePicker"
+                    Title="Select Wedding Attire"
+                    SelectedItem="{Binding SelectedAttire}">
+                <Picker.Items>
+                    <x:String>BlackTie</x:String>
+                    <x:String>Formal</x:String>
+                    <x:String>Cocktail</x:String>
+                    <x:String>SemiFormal</x:String>
+                    <x:String>Casual</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Button Text="Save"
+                Command="{Binding AddWeddingCommand}"
+                CornerRadius="10"
+                Margin="0,20,0,0"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>

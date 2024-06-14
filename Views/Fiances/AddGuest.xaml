@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Wedding_Planning_App.Views.Fiances.AddGuest"
+             xmlns:vm="clr-namespace:Wedding_Planning_App.ViewModels.Fiances"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             Title="AddGuest">
+    <!--<ContentPage.BindingContext>
+        <vm:AddGuestVM />
+    </ContentPage.BindingContext>-->
+    <VerticalStackLayout Padding="20">
+        <!-- Segmented Control for Switching Sections -->
+        <buttons:SfSegmentedControl x:Name="segmentedControl"
+                                    SelectionChanged="OnSegmentSelectionChanged" 
+                                    Margin="0,0,0,20"
+                                    SegmentWidth="150"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
+            <buttons:SfSegmentedControl.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Existing Guest</x:String>
+                    <x:String>New guest</x:String>
+                </x:Array>
+            </buttons:SfSegmentedControl.ItemsSource>
+        </buttons:SfSegmentedControl>
+
+        <!-- Select Existing User Section -->
+        <StackLayout x:Name="existingUserSection">
+            <Label Text="Select Existing User" FontAttributes="Bold" />
+            <SearchBar Placeholder="Search Users" Text="{Binding SearchQuery}" />
+            <ListView ItemsSource="{Binding FilteredUsers}" SelectionMode="Single"
+                      SelectedItem="{Binding SelectedUser}"
+                      HeightRequest="300">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}" Detail="{Binding Email}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+        <!-- Invite New Guest Section -->
+        <StackLayout x:Name="newGuestSection" IsVisible="False">
+            <Label Text="Invite New Guest" FontAttributes="Bold" />
+            <Entry Placeholder="Name" Text="{Binding NewGuestName}" />
+            <Entry Placeholder="Surname" Text="{Binding NewGuestSurname}" />
+            <Entry Placeholder="Email" Text="{Binding NewGuestEmail}" />
+            <Entry Placeholder="Phone Number" Text="{Binding NewGuestPhoneNumber}" Keyboard="Telephone"/>
+            <Entry Placeholder="Dietary Restrictions" Text="{Binding NewGuestDietaryRestrictions}" />
+        </StackLayout>
+
+
+        <!-- Add Guest Button -->
+        <Button Text="Add Guest" Command="{Binding AddGuestCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

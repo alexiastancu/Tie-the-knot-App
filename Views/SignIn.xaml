@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Wedding_Planning_App.Views.SignIn"
+             xmlns:viewModels="clr-namespace:Wedding_Planning_App.ViewModels"
+             BindingContext="SignInVM.cs"
+             Title="SignIn">
+    <VerticalStackLayout HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand"
+                         Spacing="20"
+                         Padding="20">
+
+        <Entry Placeholder="Email"
+               x:Name="EmailEntry"
+               Keyboard="Email"
+               Text="{Binding Email}"
+               VerticalOptions="CenterAndExpand" />
+
+        <Entry Placeholder="Password"
+               x:Name="PasswordEntry"
+               Text="{Binding Password}"
+               IsPassword="True"
+               VerticalOptions="CenterAndExpand" />
+
+        <Button Text="Sign In"
+                Command="{Binding SignInCommand}"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="CenterAndExpand" />
+
+        <Label Text="Don't have an account? Sign Up" HorizontalTextAlignment="Center">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding SignUpCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+
+        <Label Text="Have you been invited to a wedding? Complete your registration" HorizontalTextAlignment="Center">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding CompleteRegistrationCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+
+
+    </VerticalStackLayout>
+</ContentPage>

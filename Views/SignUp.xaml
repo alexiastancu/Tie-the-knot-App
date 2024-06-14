@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Wedding_Planning_App.Views.SignUp"
+             xmlns:vm="clr-namespace:Wedding_Planning_App.ViewModels"
+             Title="SignUp">
+
+    <ContentPage.BindingContext>
+        <vm:SignUpVM />
+    </ContentPage.BindingContext>
+    
+    <StackLayout Padding="20" VerticalOptions="StartAndExpand">
+        <Picker x:Name="RolePicker"
+                Title="Select Role"
+                SelectedItem="{Binding SelectedRole}">
+            <Picker.Items>
+                <x:String>Fiancés</x:String>
+                <x:String>Vendor</x:String>
+                <x:String>Admin</x:String>
+                <x:String>Guest</x:String>
+            </Picker.Items>
+        </Picker>
+
+
+        <Entry x:Name="NameEntry" Placeholder="Name" Text="{Binding Name}">
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry" Binding="{Binding NameValidationMessage, Converter={StaticResource StringIsNotNullOrEmptyConverter}}" Value="True">
+                    <Setter Property="Placeholder" Value="{Binding NameValidationMessage}" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+
+
+        <Entry x:Name="SurnameEntry" Placeholder="Surname" Text="{Binding Surname}">
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry" Binding="{Binding SurnameValidationMessage, Converter={StaticResource StringIsNotNullOrEmptyConverter}}" Value="True">
+                    <Setter Property="Placeholder" Value="{Binding SurnameValidationMessage}" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+
+        <Entry x:Name="EmailEntry" Placeholder="Email" Text="{Binding Email}">
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry" Binding="{Binding EmailValidationMessage, Converter={StaticResource StringIsNotNullOrEmptyConverter}}" Value="True">
+                    <Setter Property="Placeholder" Value="{Binding EmailValidationMessage}" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+
+        <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Text="{Binding Password}">
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry" Binding="{Binding PasswordValidationMessage, Converter={StaticResource StringIsNotNullOrEmptyConverter}}" Value="True">
+                    <Setter Property="Placeholder" Value="{Binding PasswordValidationMessage}" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+
+        <Entry x:Name="PhoneNumberEntry" Placeholder="Phone Number" Keyboard="Telephone" Text="{Binding PhoneNumber}">
+            <Entry.Triggers>
+                <DataTrigger TargetType="Entry" Binding="{Binding PhoneNumberValidationMessage, Converter={StaticResource StringIsNotNullOrEmptyConverter}}" Value="True">
+                    <Setter Property="Placeholder" Value="{Binding PhoneNumberValidationMessage}" />
+                </DataTrigger>
+            </Entry.Triggers>
+        </Entry>
+
+
+
+        <Entry Placeholder="Future husband's name"
+               Text="{Binding HusbandName}"
+               IsVisible="{Binding HusbandNameIsVisible}" />
+        <Entry Placeholder="Future husband's surname"
+               Text="{Binding HusbandSurname}"
+               IsVisible="{Binding HusbandNameIsVisible}" />
+        <Entry Placeholder="Future wife's name"
+               Text="{Binding WifeName}"
+               IsVisible="{Binding HusbandNameIsVisible}" />
+        <Entry Placeholder="Future wife's surname"
+               Text="{Binding WifeSurname}"
+               IsVisible="{Binding HusbandNameIsVisible}" />
+
+        <Entry Placeholder="Service Description" 
+               Text="{Binding ServiceDescription}" 
+               IsVisible="{Binding ServiceDescriptionIsVisible}" />
+        <Entry Placeholder="Category" 
+               Text="{Binding Category}" 
+               IsVisible="{Binding CategoryIsVisible}" />
+        <Entry Placeholder="Dietary Restrictions" 
+               Text="{Binding DietaryRestrictions}" 
+               IsVisible="{Binding DietaryRestrictionsIsVisible}" />
+
+
+        <Button Text="Sign Up" Command="{Binding SignUpCommand}" />
+
+        <Label Text="Already have an account? Sign In" HorizontalTextAlignment="Center">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding SignInCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+
+    </StackLayout>
+</ContentPage>
+    
