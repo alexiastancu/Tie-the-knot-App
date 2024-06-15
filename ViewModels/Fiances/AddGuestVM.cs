@@ -100,7 +100,9 @@ namespace Wedding_Planning_App.ViewModels.Fiances
                     ClearFields();
                     return;
                 }
-                await _weddingGuestService.AddGuestToWeddingAsync(weddingId, SelectedUser.Id);
+                var guest = await _guestService.GetGuestByUserIdAsync(SelectedUser.Id);
+
+                await _weddingGuestService.AddGuestToWeddingAsync(weddingId, guest.Id);
 
                 await Application.Current.MainPage.DisplayAlert("Success", "Existing user added to wedding successfully", "OK");
             }
@@ -159,13 +161,12 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         {
             var Subject = "You have been invited to a wedding";
             var Body = "You have been invited to a wedding. Please visit the app to see the details.";
-            var To = "mateidianaioana@gmail.com";
 
             await Microsoft.Maui.ApplicationModel.Communication.Email.Default.ComposeAsync(new Microsoft.Maui.ApplicationModel.Communication.EmailMessage
             {
                 Subject = Subject,
                 Body = Body,
-                To = new List<string> { To, NewGuestEmail }
+                To = new List<string> { NewGuestEmail }
             });
         }
 

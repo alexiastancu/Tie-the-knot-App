@@ -60,8 +60,19 @@ namespace Wedding_Planning_App
             };
             logoutItem.Clicked += OnLogoutClicked;
 
-            // Add the logout item to the Flyout menu
             this.Items.Add(logoutItem);
+
+            var settingsItem = new MenuItem
+            {
+                Text = "Settings",
+                IconImageSource = "settings.png"
+            };
+            settingsItem.Clicked += (sender, e) =>
+            {
+                Shell.Current.GoToAsync(nameof(Settings));
+            };
+            this.Items.Add(settingsItem);
+
         }
 
         private void AddFlyoutItem(string title, string icon, Type pageType)

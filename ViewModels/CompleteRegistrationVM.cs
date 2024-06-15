@@ -99,7 +99,7 @@ namespace Wedding_Planning_App.ViewModels
             User.PhoneNumber = PhoneNumber;
             Guest.DietaryRestrictions = DietaryRestrictions;
 
-            int resultUser = await _userService.AddPasswordToUser(user, password);
+            int resultUser = await _userService.AddPasswordToUser(User, password);
             int resultGuest = await _guestService.UpdateGuestAsync(Guest);
 
             if (resultUser > 0 && resultGuest > 0)

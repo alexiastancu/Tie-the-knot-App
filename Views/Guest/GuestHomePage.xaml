@@ -2,16 +2,29 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wedding_Planning_App.Views.Guest.GuestHomePage"
+             xmlns:vm="clr-namespace:Wedding_Planning_App.ViewModels.Guest"
+             xmlns:converters="clr-namespace:Wedding_Planning_App.Data.Converters"
              Title="Guest Home Page">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:FiancesNameConverter x:Key="FiancesNameConverter" />
+            <converters:LocationConverter x:Key="LocationConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.BindingContext>
+        <vm:GuestHomePageVM/>
+    </ContentPage.BindingContext>
     <VerticalStackLayout Padding="20">
-        <CollectionView ItemsSource="{Binding GuestWeddings}">
+        <CollectionView ItemsSource="{Binding GuestWeddings}" >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="10">
                         <StackLayout>
-                            <Label Text="{Binding FiancesName}" FontAttributes="Bold" TextColor="Black" FontSize="Large" />
-                            <Label Text="{Binding WeddingDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" TextColor="Black" FontSize="Medium" />
-                            <Label Text="{Binding LocationId}" TextColor="Black"/>
+                            <Label Text="{Binding FiancesId, Converter={StaticResource FiancesNameConverter}}" FontAttributes="Bold" TextColor="Black" FontSize="22" HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding WeddingDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" TextColor="Black" FontSize="18" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.WeddingSelectedCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
+                            </StackLayout.GestureRecognizers>
                         </StackLayout>
                     </Frame>
                 </DataTemplate>

@@ -145,7 +145,7 @@ namespace Wedding_Planning_App.ViewModels
             var result = await _userService.CreateAsync(newUser, Password);
             if (result > 0)
             {
-                int userId = newUser.Id; // Assuming the Id is set after the user is created
+                int userId = newUser.Id;
 
                 switch (SelectedRole)
                 {
@@ -170,7 +170,7 @@ namespace Wedding_Planning_App.ViewModels
                         break;
                 }
                 await Application.Current.MainPage.DisplayAlert("Success", "User created successfully", "OK");
-                await Shell.Current.GoToAsync("///SignIn");
+                await Shell.Current.GoToAsync("..");
             }
             else
             {

@@ -11,5 +11,7 @@ namespace Wedding_Planning_App.Services.Interfaces
     {
         Task<int> AddFiancesAsync(Fiances fiances);
         Task<Fiances> GetFiancesByUserIdAsync(int userId);
+
+        Task<Fiances> GetFiancesByIdAsync(int id);
     }
 }

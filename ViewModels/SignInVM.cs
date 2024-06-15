@@ -76,11 +76,11 @@ namespace Wedding_Planning_App.ViewModels
                     if (hasWedding != 0)
                     {
                         await SecureStorage.SetAsync("weddingId", hasWedding.ToString());
-                        await Shell.Current.GoToAsync(nameof(FiancesHomePage),
-                            new Dictionary<string, object>
-                            {
-                                ["User"] = user
-                            });
+                        //await Shell.Current.GoToAsync(nameof(FiancesHomePage),
+                        //    new Dictionary<string, object>
+                        //    {
+                        //        ["User"] = user
+                        //    });
                     }
                     else
                     {
@@ -93,18 +93,18 @@ namespace Wedding_Planning_App.ViewModels
                     }
                     break;
                 case UserRoles.Vendor:
-                    await Shell.Current.GoToAsync(nameof(VendorHomePage),
-                            new Dictionary<string, object>
-                            {
-                                ["User"] = user
-                            });
+                    //await Shell.Current.GoToAsync(nameof(VendorHomePage),
+                    //        new Dictionary<string, object>
+                    //        {
+                    //            ["User"] = user
+                    //        });
                     break;
                 case UserRoles.Admin:
-                    await Shell.Current.GoToAsync(nameof(AdminHomePage),
-                            new Dictionary<string, object>
-                            {
-                                ["User"] = user
-                            });
+                    //await Shell.Current.GoToAsync(nameof(AdminHomePage),
+                    //        new Dictionary<string, object>
+                    //        {
+                    //            ["User"] = user
+                    //        });
                     break;
                 case UserRoles.Guest:
                     await Shell.Current.GoToAsync(nameof(GuestHomePage),

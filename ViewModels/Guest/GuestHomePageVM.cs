@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,6 @@ namespace Wedding_Planning_App.ViewModels.Guest
     [QueryProperty(nameof(User), nameof(User))]
     public partial class GuestHomePageVM : ObservableRecipient
     {
-
         private readonly IGuestService _guestService;
         private readonly IWeddingService _weddingService;
         private readonly IWeddingGuestService _weddingGuestIntermediateService;
@@ -24,7 +24,6 @@ namespace Wedding_Planning_App.ViewModels.Guest
         [ObservableProperty]
         private Models.Guest guest;
         #endregion
-
 
 
         [ObservableProperty]
@@ -38,15 +37,25 @@ namespace Wedding_Planning_App.ViewModels.Guest
             //LoadGuestWeddings();
         }
 
+        public GuestHomePageVM()
+        {
+            
+        }
+
         public async void LoadGuestWeddings()
         {
             Guest = await _guestService.GetGuestByUserIdAsync(User.Id);
             var weddingIds = await _weddingGuestIntermediateService.GetWeddingsByGuestIdAsync(Guest.Id);
             var weddings = await _weddingService.GetWeddingsByIdsAsync(weddingIds);
             GuestWeddings = new ObservableCollection<Wedding>(weddings);
-
-
         }
 
+        [RelayCommand]
+        private async void WeddingSelected(Wedding wedding)
+        {
+            await Application.Current.MainPage.DisplayAlert("Error", "you have selected a wedding", "OK");
+            //for testing purposes
+            //var list = await _weddingGuestIntermediateService.GetGuestListAsync();
+        }
     }
 }

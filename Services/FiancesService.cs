@@ -25,6 +25,15 @@ namespace Wedding_Planning_App.Services
             return await _dbConnection._connection.InsertAsync(fiances);
         }
 
+        public async Task<Fiances> GetFiancesByIdAsync(int id)
+        {
+            await _dbConnection.SetUpDb();
+            return await _dbConnection._connection.Table<Fiances>()
+                .Where(f => f.Id == id)
+                .FirstOrDefaultAsync();
+
+        }
+
         public async Task<Fiances> GetFiancesByUserIdAsync(int userId)
         {
             await _dbConnection.SetUpDb();

@@ -42,7 +42,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
             StartCountdown();
         }
 
-        private async void StartCountdown()
+        public async void StartCountdown()
         {
             //var weddingId = int.Parse(await SecureStorage.GetAsync("weddingId"));
             var weddingId = await SecureStorage.GetAsync("weddingId");

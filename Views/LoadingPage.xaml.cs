@@ -44,7 +44,7 @@ namespace Wedding_Planning_App.Views
                         if (hasWedding != 0)
                         {
                             await SecureStorage.SetAsync("weddingId", hasWedding.ToString());
-                            await NavigateToPage(nameof(FiancesHomePage), user);
+                            //await NavigateToPage(nameof(FiancesHomePage), user);
                         }
                         else
                         {
@@ -53,10 +53,10 @@ namespace Wedding_Planning_App.Views
                         }
                         break;
                     case UserRoles.Vendor:
-                        await NavigateToPage(nameof(VendorHomePage), user);
+                        //await NavigateToPage(nameof(VendorHomePage), user);
                         break;
                     case UserRoles.Admin:
-                        await NavigateToPage(nameof(AdminHomePage), user);
+                        //await NavigateToPage(nameof(AdminHomePage), user);
                         break;
                     case UserRoles.Guest:
                         await NavigateToPage(nameof(GuestHomePage), user);
