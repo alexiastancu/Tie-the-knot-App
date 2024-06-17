@@ -14,17 +14,17 @@ namespace Wedding_Planning_App.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        [ForeignKey("Wedding")]
-        public int WeddingId { get; set; }
+        [ForeignKey("WeddingTable")]
+        public int TableId { get; set; }
         [Ignore]
-        public Wedding Wedding { get; set; }
+        public WeddingTable Table { get; set; }
 
         [ForeignKey("Guest")]
-        public int GuestId { get; set; }
+        public int? GuestId { get; set; }
         [Ignore]
         public Guest Guest { get; set; }
 
-        public int TableNumber { get; set; }
         public int SeatNumber { get; set; }
+        public bool IsOccupied { get; set; }
     }
 }

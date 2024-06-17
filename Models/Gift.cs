@@ -9,21 +9,22 @@ using SQLite;
 
 namespace Wedding_Planning_App.Models
 {
-    public class GuestGift
+    public class Gift
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        [ForeignKey("Guest")]
-        public int GuestId { get; set; }
-        [Ignore]
-        public Guest Guest { get; set; }
+        [ForeignKey("Wedding")]
+        public int WeddingId { get; set; }
 
-        [ForeignKey("GiftListItem")]
-        public int GiftListItemId { get; set; }
-        [Ignore]
-        public GiftListItem GiftListItem { get; set; }
+        [Required]
+        public string Name { get; set; }
 
-        public bool Purchased { get; set; }
+        [Required]
+        public decimal Price { get; set; }
+
+        public string StoreLink { get; set; }
+
+        public bool IsPurchased { get; set; }
     }
 }

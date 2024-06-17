@@ -18,7 +18,7 @@
         <CollectionView ItemsSource="{Binding GuestWeddings}" >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="10">
+                    <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="10" BackgroundColor="{StaticResource Quaternary}">
                         <StackLayout>
                             <Label Text="{Binding FiancesId, Converter={StaticResource FiancesNameConverter}}" FontAttributes="Bold" TextColor="Black" FontSize="22" HorizontalTextAlignment="Center"/>
                             <Label Text="{Binding WeddingDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" TextColor="Black" FontSize="18" />

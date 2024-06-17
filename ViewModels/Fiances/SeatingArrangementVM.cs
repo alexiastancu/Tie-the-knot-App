@@ -1,60 +1,142 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wedding_Planning_App.Models;
 using Wedding_Planning_App.Services.Interfaces;
+using Wedding_Planning_App.Views.Fiances;
 
 namespace Wedding_Planning_App.ViewModels.Fiances
 {
-    public partial class SeatingArrangementVM : ObservableRecipient
+    public partial class SeatingArrangementVM : ObservableObject
     {
-        //private readonly IGuestService _guestService;
+        private readonly IWeddingTableService _weddingTableService;
+        private readonly IGuestSeatService _guestSeatService;
+        private readonly IGuestService _guestService;
 
-        //[ObservableProperty]
-        //private ObservableCollection<Table> tables;
+        #region Properties
+        [ObservableProperty]
+        private ObservableCollection<WeddingTable> tables;
 
-        //[ObservableProperty]
-        //private Table selectedTable;
+        [ObservableProperty]
+        private WeddingTable selectedTable;
 
-        //public SeatingArrangementVM(IGuestService guestService)
-        //{
-        //    _guestService = guestService;
-        //    LoadTables();
-        //}
+        [ObservableProperty]
+        private GuestSeat selectedSeat;
 
-        //private void LoadTables()
-        //{
-        //    // Load tables and their seating arrangements
-        //    Tables = new ObservableCollection<Table>
-        //    {
-        //        new Table
-        //        {
-        //            Name = "Table 1",
-        //            Seats = new ObservableCollection<Seat>
-        //            {
-        //                new Seat { Position = 1, GuestName = "John Doe", IsOccupied = true },
-        //                new Seat { Position = 2, GuestName = "Jane Doe", IsOccupied = true },
-        //                new Seat { Position = 3, GuestName = "Jack Doe", IsOccupied = true },
-        //                new Seat { Position = 4, GuestName = "Jill Doe", IsOccupied = true },
-        //                new Seat { Position = 5, GuestName = "Jake Doe", IsOccupied = true },
-        //                new Seat { Position = 6, GuestName = "Jenny Doe", IsOccupied = true },
-        //                new Seat { Position = 7, GuestName = "Jim Doe", IsOccupied = true },
-        //                new Seat { Position = 8, GuestName = "Janet Doe", IsOccupied = true },
-        //            }
-        //        },
-        //        // Add more tables as needed
-        //    };
-        //}
+        [ObservableProperty]
+        private string selectedGuestName;
 
-        //[RelayCommand]
-        //private void OnSeatClicked(Seat seat)
-        //{
-        //    // Handle seat click to assign/view guest
-        //    // This can open a popup or navigate to a new page to select/assign a guest
-        //}
+        [ObservableProperty]
+        private bool isTableSelected;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(SelectedTable))]
+        private bool shouldRefreshUI;
+        #endregion
+
+        public SeatingArrangementVM(IWeddingTableService weddingTableService, IGuestSeatService guestSeatService, IGuestService guestService)
+        {
+            _weddingTableService = weddingTableService;
+            _guestSeatService = guestSeatService;
+            _guestService = guestService;
+            IsTableSelected = false;
+            LoadTables();
+        }
+
+
+
+        [RelayCommand]
+        public async Task LoadTables()
+        {
+            bool conversionSucceded = int.TryParse(await SecureStorage.GetAsync("weddingId"), out int weddingId);
+            if (!conversionSucceded)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "There was a problem retrieving the wedding, try again later", "OK");
+                Debug.WriteLine("Error retrieving weddingId from SecureStorage or converting it to int");
+                return;
+            }
+            var guests = await _guestService.GetGuestsByWeddingIdAsync(weddingId);
+
+            // Calculează numărul de mese necesare
+            int numberOfGuests = guests.Count;
+            int numberOfTables = (int)Math.Ceiling(numberOfGuests / 8.0);
+
+            // Creează mesele și locurile dacă nu există deja
+            var existingTables = await _weddingTableService.GetTablesByWeddingIdAsync(weddingId);
+            if (existingTables.Count < numberOfTables)
+            {
+                for (int i = existingTables.Count + 1; i <= numberOfTables; i++)
+                {
+                    var weddingTable = new WeddingTable
+                    {
+                        WeddingId = weddingId,
+                        TableNumber = i,
+                        Seats = new List<GuestSeat>()
+                    };
+
+                    await _weddingTableService.AddWeddingTableAsync(weddingTable);
+
+                    for (int j = 1; j <= 8; j++)
+                    {
+                        await _guestSeatService.AddGuestSeatAsync(new GuestSeat
+                        {
+                            TableId = weddingTable.Id,
+                            SeatNumber = j,
+                            IsOccupied = false
+                        });
+                        weddingTable.Seats.Add(new GuestSeat
+                        {
+                            TableId = weddingTable.Id,
+                            SeatNumber = j,
+                            IsOccupied = false
+                        });
+                        await _weddingTableService.UpdateWeddingTableAsync(weddingTable);
+                    }
+
+                    
+
+                }
+            }
+
+            // Încarcă mesele actualizate
+            var updatedTables = await _weddingTableService.GetTablesByWeddingIdAsync(weddingId);
+            foreach (var table in updatedTables)
+            {
+                table.Seats = new List<GuestSeat>(await _guestSeatService.GetSeatsByTableIdAsync(table.Id));
+            }
+            Tables = new ObservableCollection<WeddingTable>(updatedTables);
+        }
+
+        partial void OnSelectedTableChanged(WeddingTable value)
+        {
+            IsTableSelected = value != null;
+        }
+
+        [RelayCommand]
+        public async System.Threading.Tasks.Task LoadSeats(WeddingTable table)
+        {
+            var seats = await _guestSeatService.GetSeatsByTableIdAsync(table.Id);
+            table.Seats = new List<GuestSeat>(seats);
+        }
+
+        [RelayCommand]
+        private async void SeatSelected(GuestSeat seat)
+        {
+            //SelectedGuestName = seat?.Guest.User.Name + " " + seat?.Guest.User.Surname ?? "this seat is not occupied";
+            SelectedGuestName = seat?.GuestId.ToString() ?? "this seat is not occupied";
+            SelectedSeat = seat;
+            var popup = new SeatGuestPopup(seat);
+            var result = await Application.Current.MainPage.ShowPopupAsync(popup);
+            await LoadSeats(SelectedTable);
+            ShouldRefreshUI = !ShouldRefreshUI;
+        }
     }
 }
+

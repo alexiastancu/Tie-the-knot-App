@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wedding_Planning_App.Views.LoadingPage"
              Title="Loading Page">
+
     <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
         <ActivityIndicator Color="{StaticResource Primary}"
                                IsRunning="True" HeightRequest="50" WidthRequest="50"

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wedding_Planning_App.Data.Enums;
 using Wedding_Planning_App.Models;
 using Task = System.Threading.Tasks.Task;
 
@@ -19,6 +20,8 @@ namespace Wedding_Planning_App.Services.Interfaces
         public Task<User> GetUserById(int userId);
 
         public Task<int> AddPasswordToUser(User user, string password);
+
+        public Task<UserRoles> GetUserRoleAsync(int userId);
 
     }
 }

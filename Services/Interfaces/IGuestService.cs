@@ -13,6 +13,8 @@ namespace Wedding_Planning_App.Services.Interfaces
         System.Threading.Tasks.Task<Guest> GetGuestByUserIdAsync(int userId);
         Task<List<Guest>> GetGuestList();
         Task<int> UpdateGuestAsync(Guest guest);
+        Task<List<Guest>> GetGuestsByWeddingIdAsync(int weddingId);
+        Task<List<Guest>> GetUnassignedGuestsByWeddingIdAsync(int weddingId);
 
     }
 }

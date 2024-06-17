@@ -32,7 +32,7 @@
                       HeightRequest="300">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Name}" Detail="{Binding Email}" />
+                        <TextCell Text="{Binding Name}" Detail="{Binding Email}" TextColor="{StaticResource Primary}" DetailColor="Black"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

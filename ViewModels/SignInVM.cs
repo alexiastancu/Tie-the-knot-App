@@ -56,7 +56,7 @@ namespace Wedding_Planning_App.ViewModels
 
             if(user.PasswordHash == null)
             {
-                await Application.Current.MainPage.DisplayAlert("Warning", "Let's complete your account!", "OK");
+                await Application.Current.MainPage.DisplayAlert("Warning", "You have to complete your registration first", "OK");
 
                 return false;
             }
@@ -107,11 +107,11 @@ namespace Wedding_Planning_App.ViewModels
                     //        });
                     break;
                 case UserRoles.Guest:
-                    await Shell.Current.GoToAsync(nameof(GuestHomePage),
-                            new Dictionary<string, object>
-                            {
-                                ["User"] = user
-                            });
+                    //await Shell.Current.GoToAsync(nameof(GuestHomePage),
+                    //        new Dictionary<string, object>
+                    //        {
+                    //            ["User"] = user
+                    //        });
                     break;
             }
 

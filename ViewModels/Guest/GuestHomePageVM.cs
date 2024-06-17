@@ -3,11 +3,13 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wedding_Planning_App.Models;
 using Wedding_Planning_App.Services.Interfaces;
+using Wedding_Planning_App.Views.Guest;
 
 namespace Wedding_Planning_App.ViewModels.Guest
 {
@@ -44,18 +46,24 @@ namespace Wedding_Planning_App.ViewModels.Guest
 
         public async void LoadGuestWeddings()
         {
-            Guest = await _guestService.GetGuestByUserIdAsync(User.Id);
+            bool conversionSucceded = int.TryParse(await SecureStorage.GetAsync("userId"), out int userId);
+            if (!conversionSucceded)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "There was a problem retrieving the user, try again later", "OK");
+                Debug.WriteLine("Error retrieving userId from SecureStorage or converting it to int");
+                return;
+            }
+            Guest = await _guestService.GetGuestByUserIdAsync(userId);
             var weddingIds = await _weddingGuestIntermediateService.GetWeddingsByGuestIdAsync(Guest.Id);
             var weddings = await _weddingService.GetWeddingsByIdsAsync(weddingIds);
             GuestWeddings = new ObservableCollection<Wedding>(weddings);
         }
 
         [RelayCommand]
-        private async void WeddingSelected(Wedding wedding)
+        private async Task WeddingSelected(Wedding wedding)
         {
-            await Application.Current.MainPage.DisplayAlert("Error", "you have selected a wedding", "OK");
-            //for testing purposes
-            //var list = await _weddingGuestIntermediateService.GetGuestListAsync();
+            await Shell.Current.GoToAsync($"{nameof(WeddingDetails)}?{"WeddingId"}={wedding.Id}");
+            
         }
     }
 }

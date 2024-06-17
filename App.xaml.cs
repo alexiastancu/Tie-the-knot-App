@@ -1,4 +1,5 @@
 ﻿using Wedding_Planning_App.Data;
+using Wedding_Planning_App.Views;
 
 namespace Wedding_Planning_App
 {
@@ -9,7 +10,7 @@ namespace Wedding_Planning_App
             try
             {
                 InitializeComponent();
-                //UserAppTheme = AppTheme.Light;
+                UserAppTheme = AppTheme.Light;
                 MainPage = new AppShell();
             }
             catch (Exception ex)

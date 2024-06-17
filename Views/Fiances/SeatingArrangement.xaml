@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Wedding_Planning_App.Data.Converters"
              x:Class="Wedding_Planning_App.Views.Fiances.SeatingArrangement"
-             Title="SeatingArrangement">
+             Title="Chose a seat for your guests">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:OccupiedToColorConverter x:Key="OccupiedToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <VerticalStackLayout Padding="20">
+        <Label IsVisible="{Binding ShouldRefreshUI}" Text="" />
         <!-- Table Picker -->
-        <Label Text="Select Table:" FontAttributes="Bold" />
-        <Picker ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable}" />
-
+        <Label Text="Select table number:" FontAttributes="Bold" FontSize="20"/>
+        <Frame HasShadow="True" CornerRadius="10" Padding="4">
+            <Picker ItemsSource="{Binding Tables}" SelectedItem="{Binding SelectedTable}" ItemDisplayBinding="{Binding TableNumber}" />
+        </Frame>
         <!-- Seating Layout -->
-        <Grid x:Name="SeatingLayout" Padding="20" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+        <Grid x:Name="SeatingLayout" Padding="20" IsVisible="{Binding IsTableSelected}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
             <AbsoluteLayout HeightRequest="300" WidthRequest="300">
-                <!-- Circle representing the table -->
-                <Ellipse Fill="White" HeightRequest="150" WidthRequest="150" AbsoluteLayout.LayoutBounds="0.5,0.5,150,150" AbsoluteLayout.LayoutFlags="PositionProportional" />
-                <!-- Guest seating positions -->
+                <Ellipse Fill="{StaticResource Primary}" HeightRequest="150" WidthRequest="150" AbsoluteLayout.LayoutBounds="0.5,0.5,150,150" AbsoluteLayout.LayoutFlags="PositionProportional" />
                 <Button x:Name="Seat1"
                         Text="{Binding SelectedTable.Seats[0].GuestName}"
+                        Command="{Binding SeatSelectedCommand}"
+                        CommandParameter="{Binding SelectedTable.Seats[0]}"
                         BackgroundColor="{Binding SelectedTable.Seats[0].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
                         Margin="0,0,0,40"
                         WidthRequest="50"
@@ -24,6 +32,8 @@
                         AbsoluteLayout.LayoutFlags="PositionProportional" />
                 <Button x:Name="Seat2"
                         Text="{Binding SelectedTable.Seats[1].GuestName}"
+                        Command="{Binding SeatSelectedCommand}"
+                        CommandParameter="{Binding SelectedTable.Seats[1]}"
                         BackgroundColor="{Binding SelectedTable.Seats[1].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
                         Margin="0,40,0,0"
                         WidthRequest="50"
@@ -32,6 +42,8 @@
                         AbsoluteLayout.LayoutFlags="PositionProportional" />
                 <Button x:Name="Seat3"
                         Text="{Binding SelectedTable.Seats[2].GuestName}"
+                        Command="{Binding SeatSelectedCommand}"
+                        CommandParameter="{Binding SelectedTable.Seats[2]}"
                         BackgroundColor="{Binding SelectedTable.Seats[2].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
                         Margin="0,0,40,0"
                         WidthRequest="50"
@@ -40,6 +52,8 @@
                         AbsoluteLayout.LayoutFlags="PositionProportional" />
                 <Button x:Name="Seat4"
                         Text="{Binding SelectedTable.Seats[3].GuestName}"
+                        Command="{Binding SeatSelectedCommand}"
+                        CommandParameter="{Binding SelectedTable.Seats[3]}"
                         BackgroundColor="{Binding SelectedTable.Seats[3].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
                         Margin="40,0,0,0"
                         WidthRequest="50"
@@ -49,6 +63,8 @@
                 <!-- Diagonal seating positions -->
                 <Button x:Name="Seat5"
                         Text="{Binding SelectedTable.Seats[4].GuestName}"
+                        Command="{Binding SeatSelectedCommand}"
+                        CommandParameter="{Binding SelectedTable.Seats[4]}"
                         BackgroundColor="{Binding SelectedTable.Seats[4].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
                         Margin="0,0,50,50"
                         WidthRequest="50"
@@ -58,6 +74,8 @@
                         AbsoluteLayout.LayoutFlags="PositionProportional" />
                 <Button x:Name="Seat6"
                         Text="{Binding SelectedTable.Seats[5].GuestName}"
+                        Command="{Binding SeatSelectedCommand}"
+                        CommandParameter="{Binding SelectedTable.Seats[5]}"
                         BackgroundColor="{Binding SelectedTable.Seats[5].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
                         Margin="50,0,0,50"
                         WidthRequest="50"
@@ -67,6 +85,8 @@
                         AbsoluteLayout.LayoutFlags="PositionProportional" />
                 <Button x:Name="Seat7"
                         Text="{Binding SelectedTable.Seats[6].GuestName}"
+                        Command="{Binding SeatSelectedCommand}"
+                        CommandParameter="{Binding SelectedTable.Seats[6]}"
                         BackgroundColor="{Binding SelectedTable.Seats[6].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
                         Margin="0,50,50,0"
                         WidthRequest="50"
@@ -76,6 +96,8 @@
                         AbsoluteLayout.LayoutFlags="PositionProportional" />
                 <Button x:Name="Seat8"
                         Text="{Binding SelectedTable.Seats[7].GuestName}"
+                        Command="{Binding SeatSelectedCommand}"
+                        CommandParameter="{Binding SelectedTable.Seats[7]}"
                         BackgroundColor="{Binding SelectedTable.Seats[7].IsOccupied, Converter={StaticResource OccupiedToColorConverter}}"
                         Margin="50,50,0,0"
                         WidthRequest="50"
@@ -85,5 +107,11 @@
                         AbsoluteLayout.LayoutFlags="PositionProportional" />
             </AbsoluteLayout>
         </Grid>
+
+        <Frame Padding="10" Margin="10" BackgroundColor="#f0f0f0" CornerRadius="10">
+            <Label Text="{Binding SelectedGuestName}" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
+        </Frame>
+
+        <!--<Button Text="Assign seat" Command="{Binding SaveCommand}" IsEnabled="{Binding IsTableSelected}" BackgroundColor="{StaticResource Primary}" TextColor="White" CornerRadius="10" Margin="10" WidthRequest="150" HorizontalOptions="End"/>-->
     </VerticalStackLayout>
 </ContentPage>

@@ -29,16 +29,20 @@ namespace Wedding_Planning_App.Data
                     await _connection.CreateTableAsync<Wedding>();
                     await _connection.CreateTableAsync<Fiances>();
                     await _connection.CreateTableAsync<Guest>();
-                    await _connection.CreateTableAsync<Vendor>();
                     await _connection.CreateTableAsync<WeddingGuestIntermediate>();
-                    await _connection.CreateTableAsync<VendorService>();
-                    await _connection.CreateTableAsync<FinanceItem>();
-                    await _connection.CreateTableAsync<TimelineEvent>();
                     await _connection.CreateTableAsync<GuestSeat>();
-                    await _connection.CreateTableAsync<Models.Task>();
-                    await _connection.CreateTableAsync<MenuItem>();
-                    await _connection.CreateTableAsync<GiftListItem>();
-                    await _connection.CreateTableAsync<GuestGift>();
+                    await _connection.CreateTableAsync<WeddingTable>();
+                    await _connection.CreateTableAsync<Gift>();
+
+
+                    //await _connection.CreateTableAsync<Vendor>();
+                    //await _connection.CreateTableAsync<VendorService>();
+                    //await _connection.CreateTableAsync<FinanceItem>();
+                    //await _connection.CreateTableAsync<TimelineEvent>();
+                    ////await _connection.CreateTableAsync<Models.Task>();
+                    //await _connection.CreateTableAsync<MenuItem>();
+                    //await _connection.CreateTableAsync<GiftListItem>();
+                    //await _connection.CreateTableAsync<GuestGift>();
 
 
                 }

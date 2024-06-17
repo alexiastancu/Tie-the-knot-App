@@ -22,6 +22,6 @@ namespace Wedding_Planning_App.Models
         [Ignore]
         public ICollection<Wedding> Weddings { get; set; }
         [Ignore]
-        public ICollection<GuestGift> GuestGifts { get; set; }
+        public ICollection<Gift> GuestGifts { get; set; }
     }
 }

@@ -23,8 +23,9 @@ namespace Wedding_Planning_App
             Routing.RegisterRoute(nameof(AdminHomePage), typeof(AdminHomePage));
             Routing.RegisterRoute(nameof(GuestHomePage), typeof(GuestHomePage));
             Routing.RegisterRoute(nameof(VendorHomePage), typeof(VendorHomePage));
+            Routing.RegisterRoute(nameof(WeddingDetails), typeof(WeddingDetails));
+            Routing.RegisterRoute(nameof(GiftList), typeof(GiftList));
 
-            
         }
 
         public async void SetupFlyoutItems(UserRoles userRole)
@@ -36,8 +37,8 @@ namespace Wedding_Planning_App
                 case UserRoles.Fiancés:
                     AddFlyoutItem("Home", "home.png", typeof(FiancesHomePage));
                     AddFlyoutItem("Add Guests", "add_guests.png", typeof(AddGuest));
-                    AddFlyoutItem("Seat Guests", "add_guests.png", typeof(SeatingArrangement));
-
+                    AddFlyoutItem("Seat Guests", "seat.png", typeof(SeatingArrangement));
+                    AddFlyoutItem("Gift List", "gift.png", typeof(GiftList));
                     //AddFlyoutItem("View Guests", "guests.png", typeof(ViewGuests));
                     break;
                 case UserRoles.Vendor:
@@ -48,6 +49,8 @@ namespace Wedding_Planning_App
                     break;
                 case UserRoles.Guest:
                     AddFlyoutItem("Home", "home.png", typeof(GuestHomePage));
+                    //AddFlyoutItem("Gift List", "gift.png", typeof(GiftList));
+
                     break;
                 default:
                     break;

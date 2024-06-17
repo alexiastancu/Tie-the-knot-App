@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Wedding_Planning_App.Views.Fiances.GiftList"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:Wedding_Planning_App.ViewModels.Fiances"
+             xmlns:local="clr-namespace:Wedding_Planning_App.Data.Converters"
+             Title="Gift List">
+
+    <ContentPage.BindingContext>
+        <vm:GiftListVM />
+    </ContentPage.BindingContext>
+
+
+    <StackLayout Padding="20">
+        <!--<Button Text="Test" Margin="10,10,10,10">
+            <Button.Behaviors>
+                <toolkit:TouchBehavior LongPressCommand="{Binding GiftLongPressedCommand}"/>
+            </Button.Behaviors>
+        </Button>-->
+
+        <ListView ItemsSource="{Binding Gifts}" SelectedItem="{Binding SelectedGift}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <Label Text="{Binding Name}" VerticalOptions="Center"/>
+                                <Label Text="{Binding Price, StringFormat='{}{0:C}'}" VerticalOptions="Center"/>
+                                <CheckBox IsChecked="{Binding IsPurchased, Mode=OneWay}"
+                                      CheckedChanged="CheckBox_CheckedChanged" HorizontalOptions="End"/>
+                            </StackLayout>
+
+                            <!--<StackLayout.Behaviors>
+                                <toolkit:TouchBehavior LongPressCommand="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.GiftLongPressedCommand}" 
+                                                       LongPressCommandParameter="{Binding .}"/>
+                            </StackLayout.Behaviors>-->
+                        </StackLayout>                        
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Fiancés only section -->
+        <Frame Padding="10" BackgroundColor="White" CornerRadius="10" IsVisible="{Binding IsFiance}">
+            <StackLayout >
+                <Entry Placeholder="Name" Text="{Binding Name}" />
+                <Entry Placeholder="Price" Text="{Binding Price}" Keyboard="Numeric" />
+                <Entry Placeholder="Store Link" Text="{Binding StoreLink}" />
+
+                <Button Text="Add Gift" Command="{Binding AddGiftCommand}" Margin="10,10,10,10"/>
+                <Button Text="Update Gift" Command="{Binding UpdateGiftCommand}" IsEnabled="{Binding SelectedGift}" Margin="10,10,10,10"/>
+                <Button Text="Delete Gift" Command="{Binding DeleteGiftCommand}" IsEnabled="{Binding SelectedGift}" Margin="10,10,10,10"/>
+            </StackLayout>
+        </Frame>
+    </StackLayout>
+</ContentPage>

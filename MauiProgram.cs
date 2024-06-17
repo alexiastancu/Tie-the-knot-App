@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Wedding_Planning_App.Models;
 using Wedding_Planning_App.ViewModels;
 using SQLite;
-using Task = Wedding_Planning_App.Models.Task;
 using MenuItem = Wedding_Planning_App.Models.MenuItem;
 using Wedding_Planning_App.Services;
 using Wedding_Planning_App.Views;
@@ -15,6 +14,7 @@ using Wedding_Planning_App.Services.Interfaces;
 using Syncfusion.Maui.Core.Hosting;
 using Wedding_Planning_App.Views.Guest;
 using Wedding_Planning_App.ViewModels.Guest;
+using CommunityToolkit.Maui;
 
 namespace Wedding_Planning_App
 {
@@ -30,8 +30,9 @@ namespace Wedding_Planning_App
                     fonts.AddFont("SF-Pro.ttf", "SFPro");
                     fonts.AddFont("SF-Pro-Text-Bold.otf", "SFProBold");
                 })
+                .UseMauiCommunityToolkit()
                 .ConfigureSyncfusionCore()
-            .UseMauiMaps();
+                .UseMauiMaps();
             builder.Services.AddSingleton<DbConnection>();
 
             builder.Services.AddSingleton<IUserService, UserService>();
@@ -40,6 +41,9 @@ namespace Wedding_Planning_App
             builder.Services.AddSingleton<IWeddingGuestService, WeddingGuestService>();
             builder.Services.AddSingleton<IGuestService, GuestService>();
             builder.Services.AddSingleton<IFiancesService, FiancesService>();
+            builder.Services.AddSingleton<IWeddingTableService, WeddingTableService>();
+            builder.Services.AddSingleton<IGuestSeatService, GuestSeatService>();
+            builder.Services.AddSingleton<IGiftService, GiftService>();
 
 
             builder.Services.AddTransient<SignIn>();
@@ -50,6 +54,8 @@ namespace Wedding_Planning_App
             builder.Services.AddTransient<AddGuest>();
             builder.Services.AddTransient<CompleteRegistration>();
             builder.Services.AddTransient<SeatingArrangement>();
+            builder.Services.AddTransient<GiftList>();
+            builder.Services.AddTransient<WeddingDetails>();
 
 
             builder.Services.AddSingleton<SignUpVM>();
@@ -60,6 +66,9 @@ namespace Wedding_Planning_App
             builder.Services.AddTransient<AddGuestVM>();
             builder.Services.AddSingleton<CompleteRegistrationVM>();
             builder.Services.AddSingleton<SeatingArrangementVM>();
+            builder.Services.AddSingleton<GiftListVM>();
+            builder.Services.AddSingleton<WeddingDetailsVM>();
+            builder.Services.AddSingleton<SeatGuestPopupVM>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

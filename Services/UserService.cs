@@ -9,6 +9,7 @@ using User = Wedding_Planning_App.Models.User;
 using DbConnection = Wedding_Planning_App.Data.DbConnection;
 using Task = System.Threading.Tasks.Task;
 using Wedding_Planning_App.Services.Interfaces;
+using Wedding_Planning_App.Data.Enums;
 
 namespace Wedding_Planning_App.Services
 {
@@ -98,6 +99,15 @@ namespace Wedding_Planning_App.Services
 
             return await _connection._connection.UpdateAsync(user);
 
+        }
+
+        public async Task<UserRoles> GetUserRoleAsync(int userId)
+        {
+            await _connection.SetUpDb();
+            var user = await _connection._connection.Table<User>()
+                                                     .Where(u => u.Id == userId)
+                                                     .FirstOrDefaultAsync();
+            return user.Role;
         }
     }
 }

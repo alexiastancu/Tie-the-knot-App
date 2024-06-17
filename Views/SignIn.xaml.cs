@@ -8,6 +8,5 @@ public partial class SignIn : ContentPage
 	{
 		InitializeComponent();
         BindingContext = vm;
-        //SecureStorage.SetAsync("hasAuth", "true");
     }
 }

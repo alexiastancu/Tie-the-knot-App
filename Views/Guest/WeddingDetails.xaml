@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Wedding_Planning_App.Data.Converters"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             x:Class="Wedding_Planning_App.Views.Guest.WeddingDetails"
+             xmlns:vm="clr-namespace:Wedding_Planning_App.ViewModels.Guest"
+             Title="Wedding Details">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:SelectedSeatToColorConverter x:Key="SelectedSeatToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <vm:WeddingDetailsVM />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <StackLayout Padding="10" Spacing="10">
+
+            <!-- Wedding Location -->
+            <Frame CornerRadius="10" Padding="10" Margin="0,10">
+                <StackLayout>
+                    <Label Text="Location" FontAttributes="Bold" FontSize="25" />
+                    <maps:Map x:Name="map" HeightRequest="400" WidthRequest="350" IsZoomEnabled="True" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Wedding Attire -->
+            <Frame CornerRadius="10" Padding="10" Margin="0,10">
+                <StackLayout>
+                    <Label Text="Wedding Attire" FontAttributes="Bold" FontSize="25" />
+                    <Label Text="{Binding Wedding.WeddingAttire}" FontSize="20" />
+                </StackLayout>
+            </Frame>
+
+            <!-- Seat Allocation -->
+            <Frame CornerRadius="10" Padding="10" Margin="0,10" IsVisible="{Binding IsSeatAssigned}">
+                <StackLayout>
+                    <Label Text="Seat Allocation" FontAttributes="Bold" FontSize="25" />
+                    <Label Text="{Binding GuestTable.TableNumber, StringFormat='Table: {0}'}" FontSize="20" />
+                    <Label Text="{Binding GuestSeat.SeatNumber, StringFormat='Seat: {0}'}" FontSize="20" />
+
+                    <AbsoluteLayout HeightRequest="300" WidthRequest="300">
+                        <!-- Circle representing the table -->
+                        <Ellipse Fill="LightGray" HeightRequest="150" WidthRequest="150" AbsoluteLayout.LayoutBounds="0.5,0.5,150,150" AbsoluteLayout.LayoutFlags="PositionProportional" />
+                        <Button x:Name="Seat1"
+                                BackgroundColor="{Binding SelectedSeatIndex, Converter={StaticResource SelectedSeatToColorConverter}, ConverterParameter=0}"
+                                Margin="0,0,0,40"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                AbsoluteLayout.LayoutBounds="0.5,0.1,60,60"
+                                AbsoluteLayout.LayoutFlags="PositionProportional" />
+                        <Button x:Name="Seat2"
+                                BackgroundColor="{Binding SelectedSeatIndex, Converter={StaticResource SelectedSeatToColorConverter}, ConverterParameter=1}"
+                                Margin="0,40,0,0"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                AbsoluteLayout.LayoutBounds="0.5,0.9,60,60"
+                                AbsoluteLayout.LayoutFlags="PositionProportional" />
+                        <Button x:Name="Seat3"
+                                BackgroundColor="{Binding SelectedSeatIndex, Converter={StaticResource SelectedSeatToColorConverter}, ConverterParameter=2}"
+                                Margin="0,0,40,0"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                AbsoluteLayout.LayoutBounds="0.1,0.5,60,60"
+                                AbsoluteLayout.LayoutFlags="PositionProportional" />
+                        <Button x:Name="Seat4"
+                                BackgroundColor="{Binding SelectedSeatIndex, Converter={StaticResource SelectedSeatToColorConverter}, ConverterParameter=3}"
+                                Margin="40,0,0,0"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                AbsoluteLayout.LayoutBounds="0.9,0.5,60,60"
+                                AbsoluteLayout.LayoutFlags="PositionProportional" />
+                        <Button x:Name="Seat5"
+                                BackgroundColor="{Binding SelectedSeatIndex, Converter={StaticResource SelectedSeatToColorConverter}, ConverterParameter=4}"
+                                Margin="0,0,50,50"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                Rotation="45"
+                                AbsoluteLayout.LayoutBounds="0.25,0.25,60,60"
+                                AbsoluteLayout.LayoutFlags="PositionProportional" />
+                        <Button x:Name="Seat6"
+                                BackgroundColor="{Binding SelectedSeatIndex, Converter={StaticResource SelectedSeatToColorConverter}, ConverterParameter=5}"
+                                Margin="50,0,0,50"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                Rotation="45"
+                                AbsoluteLayout.LayoutBounds="0.75,0.25,60,60"
+                                AbsoluteLayout.LayoutFlags="PositionProportional" />
+                        <Button x:Name="Seat7"
+                                BackgroundColor="{Binding SelectedSeatIndex, Converter={StaticResource SelectedSeatToColorConverter}, ConverterParameter=6}"
+                                Margin="0,50,50,0"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                Rotation="45"
+                                AbsoluteLayout.LayoutBounds="0.25,0.75,60,60"
+                                AbsoluteLayout.LayoutFlags="PositionProportional" />
+                        <Button x:Name="Seat8"
+                                BackgroundColor="{Binding SelectedSeatIndex, Converter={StaticResource SelectedSeatToColorConverter}, ConverterParameter=7}"
+                                Margin="50,50,0,0"
+                                WidthRequest="50"
+                                HeightRequest="50"
+                                Rotation="45"
+                                AbsoluteLayout.LayoutBounds="0.75,0.75,60,60"
+                                AbsoluteLayout.LayoutFlags="PositionProportional" />
+                    </AbsoluteLayout>
+                </StackLayout>
+            </Frame>
+
+            <!-- Navigate to Gift List -->
+            <Frame CornerRadius="10" Padding="10" Margin="0,10">
+                <StackLayout>
+                    <Button Text="View Gift List" Command="{Binding NavigateToGiftListCommand}" BackgroundColor="{StaticResource Primary}" TextColor="White" CornerRadius="10" Margin="10" WidthRequest="150" HorizontalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

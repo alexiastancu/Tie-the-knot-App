@@ -2,13 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wedding_Planning_App.Views.Fiances.AddWedding"
-            xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
             Title="Add Wedding">
     <ScrollView>
         <VerticalStackLayout Padding="20">
             <DatePicker x:Name="datePicker"
                 Date="{Binding WeddingDate}"
-                Format="dd/MM/yyyy"/>
+                Format="dd/MM/yyyy"
+                MinimumDate="{x:Static sys:DateTime.Today}"/>
 
             <Entry x:Name="budgetEntry"
            Text="{Binding Budget}"

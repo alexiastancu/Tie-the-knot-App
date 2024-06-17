@@ -20,7 +20,6 @@ namespace Wedding_Planning_App.Views
         {
             InitializeComponent();
             _userService = new UserService();
-            //Application.Current.UserAppTheme = AppTheme.Light;
         }
 
         protected override async void OnNavigatedTo(NavigatedToEventArgs args)
@@ -31,9 +30,15 @@ namespace Wedding_Planning_App.Views
             var hasAuth = await isAuthenticated();
             if (hasAuth == "true")
             {
-                var userId = await SecureStorage.GetAsync("userId");
+                bool conversionSucceded = int.TryParse(await SecureStorage.GetAsync("userId"), out int userId);
+                if (!conversionSucceded)
+                {
+                    await Application.Current.MainPage.DisplayAlert("Error", "There was a problem retrieving the user, try again later", "OK");
+                    Debug.WriteLine("Error retrieving userId from SecureStorage or converting it to int");
+                    return;
+                }
 
-                User user = await _userService.GetUserById(int.Parse(userId));
+                User user = await _userService.GetUserById(userId);
 
                 ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
 
@@ -44,7 +49,6 @@ namespace Wedding_Planning_App.Views
                         if (hasWedding != 0)
                         {
                             await SecureStorage.SetAsync("weddingId", hasWedding.ToString());
-                            //await NavigateToPage(nameof(FiancesHomePage), user);
                         }
                         else
                         {
@@ -59,7 +63,7 @@ namespace Wedding_Planning_App.Views
                         //await NavigateToPage(nameof(AdminHomePage), user);
                         break;
                     case UserRoles.Guest:
-                        await NavigateToPage(nameof(GuestHomePage), user);
+                        //await NavigateToPage(nameof(GuestHomePage), user);
                         break;
                 }
             }

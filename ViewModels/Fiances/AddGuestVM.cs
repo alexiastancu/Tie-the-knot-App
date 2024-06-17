@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         public ObservableCollection<User> FilteredUsers { get; } = new ObservableCollection<User>();
 
         private int weddingId;
+        private Wedding wedding;
 
         [ObservableProperty]
         private string searchQuery;
@@ -60,8 +62,12 @@ namespace Wedding_Planning_App.ViewModels.Fiances
                 if (user.Role == UserRoles.Guest)
                     FilteredUsers.Add(user);
             }
-            weddingId = int.Parse(await SecureStorage.GetAsync("weddingId"));
-
+            bool conversionSucceded = int.TryParse(await SecureStorage.GetAsync("weddingId"), out weddingId);
+            if(!conversionSucceded)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "There was a problem retrieving the wedding, try again later", "OK");
+                Debug.WriteLine("Error retrieving weddingId from SecureStorage or converting it to int");
+            }
         }
 
         partial void OnSearchQueryChanged(string value)
@@ -79,6 +85,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
             else
             {
                 var filtered = FilteredUsers.Where(u => u.Name.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                                                        u.Surname.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) ||  
                                                         u.Email.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
                 FilteredUsers.Clear();
                 foreach (var user in filtered)
@@ -159,14 +166,16 @@ namespace Wedding_Planning_App.ViewModels.Fiances
 
         private async void SendEmail()
         {
-            var Subject = "You have been invited to a wedding";
-            var Body = "You have been invited to a wedding. Please visit the app to see the details.";
+            var Subject = "You have been invited to a wedding!";
+            var Body = "We are delighted to invite you to celebrate a special and unique moment in our lives, our wedding. \nPlease visit the app 'the knot' and register with this email to see the details.";
+
+            
 
             await Microsoft.Maui.ApplicationModel.Communication.Email.Default.ComposeAsync(new Microsoft.Maui.ApplicationModel.Communication.EmailMessage
             {
                 Subject = Subject,
                 Body = Body,
-                To = new List<string> { NewGuestEmail }
+                To = [NewGuestEmail]
             });
         }
 

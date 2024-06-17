@@ -9,18 +9,18 @@ using SQLite;
 
 namespace Wedding_Planning_App.Models
 {
-    public class Task
-    {
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
+    //public class Task
+    //{
+    //    [PrimaryKey, AutoIncrement]
+    //    public int Id { get; set; }
 
-        [ForeignKey("Wedding")]
-        public int WeddingId { get; set; }
-        [Ignore]
-        public Wedding Wedding { get; set; }
+    //    [ForeignKey("Wedding")]
+    //    public int WeddingId { get; set; }
+    //    [Ignore]
+    //    public Wedding Wedding { get; set; }
 
-        public string Description { get; set; }
-        public DateTime DueDate { get; set; }
-        public string Priority { get; set; }
-    }
+    //    public string Description { get; set; }
+    //    public DateTime DueDate { get; set; }
+    //    public string Priority { get; set; }
+    //}
 }

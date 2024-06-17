@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Timers;
 using Wedding_Planning_App.Models;
@@ -44,12 +45,14 @@ namespace Wedding_Planning_App.ViewModels.Fiances
 
         public async void StartCountdown()
         {
-            //var weddingId = int.Parse(await SecureStorage.GetAsync("weddingId"));
-            var weddingId = await SecureStorage.GetAsync("weddingId");
-            if (weddingId != null)
+            bool conversionSucceded = int.TryParse(await SecureStorage.GetAsync("weddingId"), out int weddingId);
+            if (!conversionSucceded)
             {
-                WeddingDate = (await _weddingService.GetWeddingByIdAsync(int.Parse(weddingId))).WeddingDate;
+                await Application.Current.MainPage.DisplayAlert("Error", "There was a problem retrieving the wedding, try again later", "OK");
+                Debug.WriteLine("Error retrieving weddingId from SecureStorage or converting it to int");
+                return;
             }
+            WeddingDate = (await _weddingService.GetWeddingByIdAsync(weddingId)).WeddingDate;
 
             _timer = new System.Timers.Timer(1000);
             _timer.Elapsed += TimerElapsed;
