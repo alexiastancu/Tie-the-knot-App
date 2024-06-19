@@ -13,7 +13,9 @@
     <StackLayout Padding="20" VerticalOptions="StartAndExpand">
         <Picker x:Name="RolePicker"
                 Title="Select Role"
-                SelectedItem="{Binding SelectedRole}">
+                SelectedItem="{Binding SelectedRole}"
+                TextColor="Black"
+                TitleColor="Black">
             <Picker.Items>
                 <x:String>Fiancés</x:String>
                 <x:String>Vendor</x:String>

@@ -13,5 +13,6 @@ namespace Wedding_Planning_App.Services.Interfaces
         Task<Fiances> GetFiancesByUserIdAsync(int userId);
 
         Task<Fiances> GetFiancesByIdAsync(int id);
+        Task<int> UpdateFiancesAsync(Fiances fiances);
     }
 }

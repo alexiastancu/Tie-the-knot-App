@@ -30,7 +30,7 @@
             <!-- Wedding Attire -->
             <Frame CornerRadius="10" Padding="10" Margin="0,10">
                 <StackLayout>
-                    <Label Text="Wedding Attire" FontAttributes="Bold" FontSize="25" />
+                    <Label Text="Dress Code" FontAttributes="Bold" FontSize="25" />
                     <Label Text="{Binding Wedding.WeddingAttire}" FontSize="20" />
                 </StackLayout>
             </Frame>

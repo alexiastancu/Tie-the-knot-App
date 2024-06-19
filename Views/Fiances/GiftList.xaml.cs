@@ -28,6 +28,10 @@ public partial class GiftList : ContentPage
             if (!gift.IsPurchased)
             {
                 viewModel.PurchaseGiftCommand.Execute(gift);
+                if(viewModel.IsFiance)
+                {
+                    checkBox.IsChecked = false;
+                }
             }
             else
             {

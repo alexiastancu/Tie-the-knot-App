@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Wedding_Planning_App.ViewModels.Fiances"
              x:Class="Wedding_Planning_App.Views.Fiances.FiancesHomePage"
-             Title="FiancesHomePage">
+             Title="Fiances Home Page">
     <ContentPage.BindingContext>
         <vm:FiancesHomepageVM />
     </ContentPage.BindingContext>

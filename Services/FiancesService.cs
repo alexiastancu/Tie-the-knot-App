@@ -42,6 +42,12 @@ namespace Wedding_Planning_App.Services
                 .FirstOrDefaultAsync();
 
         }
+
+        public async Task<int> UpdateFiancesAsync(Fiances fiances)
+        {
+            await _dbConnection.SetUpDb();
+            return await _dbConnection._connection.UpdateAsync(fiances);
+        }
     }
 
 }

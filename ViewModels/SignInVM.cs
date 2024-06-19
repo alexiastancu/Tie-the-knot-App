@@ -68,7 +68,7 @@ namespace Wedding_Planning_App.ViewModels
             }
             await SecureStorage.SetAsync("hasAuth", "true");
             await SecureStorage.SetAsync("userId", user.Id.ToString());
-            ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
+
             switch (user.Role)
             {
                 case UserRoles.Fiancés:
@@ -114,6 +114,7 @@ namespace Wedding_Planning_App.ViewModels
                     //        });
                     break;
             }
+            ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
 
             return true;
         }

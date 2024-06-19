@@ -47,6 +47,13 @@ namespace Wedding_Planning_App.Services.Interfaces
                     guestSeat.Guest = await _connection._connection.Table<Guest>()
                                                 .Where(g => g.Id == guestSeat.GuestId)
                                                 .FirstOrDefaultAsync();
+
+                    if (guestSeat.Guest != null)
+                    {
+                        guestSeat.Guest.User = await _connection._connection.Table<User>()
+                                                    .Where(u => u.Id == guestSeat.Guest.UserId)
+                                                    .FirstOrDefaultAsync();
+                    }
                 }
             }
 

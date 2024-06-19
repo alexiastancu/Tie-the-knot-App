@@ -55,5 +55,35 @@ namespace Wedding_Planning_App.Services
             var guestWeddingIds = guestWeddings.Select(wg => wg.WeddingId).ToList();
             return guestWeddingIds;
         }
+
+        public async Task RemoveGuestFromWeddingAsync(int weddingId, int guestId)
+        {
+            await _connection.SetUpDb();
+
+            var weddingGuest = await _connection._connection.Table<WeddingGuestIntermediate>()
+                                        .Where(wg => wg.WeddingId == weddingId && wg.GuestId == guestId)
+                                        .FirstOrDefaultAsync();
+
+            var gueststable = await _connection._connection.Table<WeddingGuestIntermediate>().ToListAsync();
+
+
+            var guestSeat = await _connection._connection.Table<GuestSeat>()
+                                        .Where(gs => gs.GuestId == guestId)
+                                        .FirstOrDefaultAsync();
+
+            if (guestSeat != null)
+            {
+                guestSeat.GuestId = null;
+                await _connection._connection.UpdateAsync(guestSeat);
+            }
+
+            if (weddingGuest != null)
+            {
+                await _connection._connection.DeleteAsync(weddingGuest);
+            }
+            var table = await _connection._connection.Table<WeddingGuestIntermediate>().ToListAsync();
+            var guestSeats = await _connection._connection.Table<GuestSeat>().ToListAsync();
+        }
+
     }
 }

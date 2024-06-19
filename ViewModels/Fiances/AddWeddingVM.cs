@@ -167,6 +167,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
             await SecureStorage.SetAsync("weddingId", weddingId.ToString());
 
             await Application.Current.MainPage.DisplayAlert("Success", "Wedding added successfully", "OK");
+            ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(User.Role);
             await Shell.Current.GoToAsync("..");
 
         }

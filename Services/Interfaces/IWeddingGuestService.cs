@@ -13,5 +13,6 @@ namespace Wedding_Planning_App.Services.Interfaces
         public Task<List<WeddingGuestIntermediate>> GetGuestListAsync();
         Task<List<int>> GetWeddingsByGuestIdAsync(int guestId);
         public Task<bool> IsGuestAlreadyAddedToWeddingAsync(int weddingId, int guestId);
+        public Task RemoveGuestFromWeddingAsync(int weddingId, int guestId);
     }
 }

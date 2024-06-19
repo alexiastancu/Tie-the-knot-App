@@ -20,7 +20,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
 
         public GiftListVM()
         {
-            
+
         }
         public GiftListVM(IGiftService giftService, IUserService userService)
         {
@@ -55,7 +55,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         [RelayCommand]
         public async Task LoadGifts()
         {
-            if(IsFiance)
+            if(isFiance)
             {
                 bool conversionSucceded = int.TryParse(await SecureStorage.GetAsync("weddingId"), out weddingId);
                 if (!conversionSucceded)
@@ -65,6 +65,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
                     return;
                 }
             }
+            
             var gifts = await _giftService.GetGiftsByWeddingIdAsync(WeddingId);
             Gifts = new ObservableCollection<Gift>(gifts);
         }
@@ -113,7 +114,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         [RelayCommand]
         private async Task PurchaseGift(Gift gift)
         {
-            if (gift != null && !gift.IsPurchased)
+            if (gift != null && !gift.IsPurchased && !isFiance)
             {
                 await Application.Current.MainPage.DisplayAlert("Gift purchased", "Are you sure you want to purchase this gift?", "YES");
                 gift.IsPurchased = true;
@@ -128,20 +129,36 @@ namespace Wedding_Planning_App.ViewModels.Fiances
             if (!conversionSucceded)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "There was a problem retrieving the user, try again later", "OK");
-                Debug.WriteLine("Error retrieving weddingId from SecureStorage or converting it to int");
+                Debug.WriteLine("Error retrieving userId from SecureStorage or converting it to int");
                 return;
             }
             var role = await _userService.GetUserRoleAsync(userId);
             IsFiance = role == UserRoles.Fiancés;
         }
 
-        partial void OnSelectedGiftChanged(Gift value)
+        async partial void OnSelectedGiftChanged(Gift value)
         {
             if (value != null)
             {
                 Name = value.Name;
                 Price = value.Price;
                 StoreLink = value.StoreLink;
+                if (!IsFiance)
+                {
+                    bool confirm = await Application.Current.MainPage.DisplayAlert("Open Link", "Do you want to open the gift link?", "Yes", "No");
+                    if (confirm)
+                    {
+                        try
+                        {
+                            Uri uri = new Uri(value.StoreLink);
+                            await Browser.OpenAsync(uri, BrowserLaunchMode.SystemPreferred);
+                        }
+                        catch (Exception ex)
+                        {
+                            await Application.Current.MainPage.DisplayAlert("Unable to open link", ex.Message, "OK");
+                        }
+                    }
+                }
             }
         }
 

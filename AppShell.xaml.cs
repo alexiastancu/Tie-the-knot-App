@@ -25,6 +25,9 @@ namespace Wedding_Planning_App
             Routing.RegisterRoute(nameof(VendorHomePage), typeof(VendorHomePage));
             Routing.RegisterRoute(nameof(WeddingDetails), typeof(WeddingDetails));
             Routing.RegisterRoute(nameof(GiftList), typeof(GiftList));
+            Routing.RegisterRoute(nameof(Settings), typeof(Settings));
+
+            Routing.RegisterRoute("//LoadingPage/SignIn", typeof(SignIn));
 
         }
 
@@ -38,8 +41,8 @@ namespace Wedding_Planning_App
                     AddFlyoutItem("Home", "home.png", typeof(FiancesHomePage));
                     AddFlyoutItem("Add Guests", "add_guests.png", typeof(AddGuest));
                     AddFlyoutItem("Seat Guests", "seat.png", typeof(SeatingArrangement));
+                    AddFlyoutItem("View Guests", "guests.png", typeof(ManageGuests));
                     AddFlyoutItem("Gift List", "gift.png", typeof(GiftList));
-                    //AddFlyoutItem("View Guests", "guests.png", typeof(ViewGuests));
                     break;
                 case UserRoles.Vendor:
                     AddFlyoutItem("Home", "home.png", typeof(VendorHomePage));
@@ -49,8 +52,6 @@ namespace Wedding_Planning_App
                     break;
                 case UserRoles.Guest:
                     AddFlyoutItem("Home", "home.png", typeof(GuestHomePage));
-                    //AddFlyoutItem("Gift List", "gift.png", typeof(GiftList));
-
                     break;
                 default:
                     break;
@@ -70,10 +71,7 @@ namespace Wedding_Planning_App
                 Text = "Settings",
                 IconImageSource = "settings.png"
             };
-            settingsItem.Clicked += (sender, e) =>
-            {
-                Shell.Current.GoToAsync(nameof(Settings));
-            };
+            settingsItem.Clicked += OnSettingsClicked;
             this.Items.Add(settingsItem);
 
         }
@@ -118,7 +116,13 @@ namespace Wedding_Planning_App
             SecureStorage.Remove("weddingId");
 
             await Shell.Current.GoToAsync(nameof(SignIn), true);
-            //await Shell.Current.GoToAsync($"//{nameof(SignIn)}");
+
         }
+
+        private async void OnSettingsClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync(nameof(Settings), true);
+        }
+
     }
 }

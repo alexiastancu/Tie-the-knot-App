@@ -29,10 +29,18 @@
             <SearchBar Placeholder="Search Users" Text="{Binding SearchQuery}" />
             <ListView ItemsSource="{Binding FilteredUsers}" SelectionMode="Single"
                       SelectedItem="{Binding SelectedUser}"
-                      HeightRequest="300">
+                      HeightRequest="400">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Name}" Detail="{Binding Email}" TextColor="{StaticResource Primary}" DetailColor="Black"/>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal" Padding="9" Spacing="5">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="17"/>
+                                    <Label Text="{Binding Surname}" FontAttributes="Bold" FontSize="17"/>
+                                </StackLayout>
+                                <!--<Label Text="{Binding Email}" FontSize="15" TextColor="Gray"/>-->
+                            </StackLayout>
+                        </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

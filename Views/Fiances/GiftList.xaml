@@ -13,11 +13,6 @@
 
 
     <StackLayout Padding="20">
-        <!--<Button Text="Test" Margin="10,10,10,10">
-            <Button.Behaviors>
-                <toolkit:TouchBehavior LongPressCommand="{Binding GiftLongPressedCommand}"/>
-            </Button.Behaviors>
-        </Button>-->
 
         <ListView ItemsSource="{Binding Gifts}" SelectedItem="{Binding SelectedGift}">
             <ListView.ItemTemplate>
@@ -28,13 +23,10 @@
                                 <Label Text="{Binding Name}" VerticalOptions="Center"/>
                                 <Label Text="{Binding Price, StringFormat='{}{0:C}'}" VerticalOptions="Center"/>
                                 <CheckBox IsChecked="{Binding IsPurchased, Mode=OneWay}"
-                                      CheckedChanged="CheckBox_CheckedChanged" HorizontalOptions="End"/>
+                                      CheckedChanged="CheckBox_CheckedChanged" HorizontalOptions="End"
+                                          IsEnabled="{Binding IsFiance}"/>
                             </StackLayout>
 
-                            <!--<StackLayout.Behaviors>
-                                <toolkit:TouchBehavior LongPressCommand="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.GiftLongPressedCommand}" 
-                                                       LongPressCommandParameter="{Binding .}"/>
-                            </StackLayout.Behaviors>-->
                         </StackLayout>                        
                     </ViewCell>
                 </DataTemplate>

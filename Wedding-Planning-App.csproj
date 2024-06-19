@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>Wedding-Planning-App</ApplicationTitle>
+		<ApplicationTitle>Tie the knot app</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.wedding_planning_app</ApplicationId>
@@ -86,6 +86,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Fiances\GiftList.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Fiances\ManageGuests.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Fiances\SeatGuestPopup.xaml">

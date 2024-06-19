@@ -37,7 +37,11 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         private bool isTableSelected;
 
         [ObservableProperty]
+        private bool isAssignButtonVisible;
+
+        [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(SelectedTable))]
+        [NotifyPropertyChangedFor(nameof(SelectedGuestName))]
         private bool shouldRefreshUI;
         #endregion
 
@@ -47,9 +51,13 @@ namespace Wedding_Planning_App.ViewModels.Fiances
             _guestSeatService = guestSeatService;
             _guestService = guestService;
             IsTableSelected = false;
+            isAssignButtonVisible = false;
             LoadTables();
         }
-
+        public SeatingArrangementVM()
+        {
+            
+        }
 
 
         [RelayCommand]
@@ -129,13 +137,31 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         [RelayCommand]
         private async void SeatSelected(GuestSeat seat)
         {
-            //SelectedGuestName = seat?.Guest.User.Name + " " + seat?.Guest.User.Surname ?? "this seat is not occupied";
-            SelectedGuestName = seat?.GuestId.ToString() ?? "this seat is not occupied";
+            SelectedGuestName = seat.Guest?.User.Name + " " + seat?.Guest?.User.Surname ?? "this seat is not occupied";
+            //SelectedGuestName = seat.GuestId?.ToString() ?? "This seat is not occupied";
             SelectedSeat = seat;
-            var popup = new SeatGuestPopup(seat);
-            var result = await Application.Current.MainPage.ShowPopupAsync(popup);
+            isAssignButtonVisible = true;
+
+            //SelectedGuestName = seat?.Guest.User.Name + " " + seat?.Guest.User.Surname ?? "this seat is not occupied";
+            //SelectedGuestName = seat?.GuestId.ToString() ?? "this seat is not occupied";
+            //SelectedSeat = seat;
+            //var popup = new SeatGuestPopup(seat);
+            //var result = await Application.Current.MainPage.ShowPopupAsync(popup);
+            //await LoadSeats(SelectedTable);
+            //ShouldRefreshUI = !ShouldRefreshUI;
+        }
+
+        [RelayCommand]
+        private async Task OpenSeatPopup()
+        {
+            var popup = new SeatGuestPopup(SelectedSeat);
+            Models.Guest result = (Models.Guest)await Application.Current.MainPage.ShowPopupAsync(popup);
             await LoadSeats(SelectedTable);
+            //SelectedGuestName = result?.Id.ToString() ?? "This seat is not occupied";
+            SelectedGuestName = result?.User.Name + " " + result?.User.Surname ?? "this seat is not occupied";
+
             ShouldRefreshUI = !ShouldRefreshUI;
+            isAssignButtonVisible = false;
         }
     }
 }

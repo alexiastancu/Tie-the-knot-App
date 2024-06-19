@@ -40,8 +40,6 @@ namespace Wedding_Planning_App.Views
 
                 User user = await _userService.GetUserById(userId);
 
-                ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
-
                 switch (user?.Role)
                 {
                     case UserRoles.Fiancés:
@@ -49,6 +47,8 @@ namespace Wedding_Planning_App.Views
                         if (hasWedding != 0)
                         {
                             await SecureStorage.SetAsync("weddingId", hasWedding.ToString());
+                            ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
+
                         }
                         else
                         {
@@ -58,14 +58,20 @@ namespace Wedding_Planning_App.Views
                         break;
                     case UserRoles.Vendor:
                         //await NavigateToPage(nameof(VendorHomePage), user);
+                        ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
                         break;
                     case UserRoles.Admin:
                         //await NavigateToPage(nameof(AdminHomePage), user);
+                        ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
                         break;
                     case UserRoles.Guest:
                         //await NavigateToPage(nameof(GuestHomePage), user);
+                        ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
                         break;
+
                 }
+                
+
             }
             else
             {

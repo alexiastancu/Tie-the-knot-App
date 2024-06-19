@@ -56,19 +56,23 @@ namespace Wedding_Planning_App
             builder.Services.AddTransient<SeatingArrangement>();
             builder.Services.AddTransient<GiftList>();
             builder.Services.AddTransient<WeddingDetails>();
+            builder.Services.AddTransient<Settings>();
+            builder.Services.AddTransient<ManageGuests>();
 
 
-            builder.Services.AddSingleton<SignUpVM>();
-            builder.Services.AddSingleton<SignInVM>();
-            builder.Services.AddSingleton<AddWeddingVM>();
-            builder.Services.AddSingleton<FiancesHomepageVM>();
-            builder.Services.AddSingleton<GuestHomePageVM>();
+            builder.Services.AddTransient<SignUpVM>();
+            builder.Services.AddTransient<SignInVM>();
+            builder.Services.AddTransient<AddWeddingVM>();
+            builder.Services.AddTransient<FiancesHomepageVM>();
+            builder.Services.AddTransient<GuestHomePageVM>();
             builder.Services.AddTransient<AddGuestVM>();
-            builder.Services.AddSingleton<CompleteRegistrationVM>();
-            builder.Services.AddSingleton<SeatingArrangementVM>();
-            builder.Services.AddSingleton<GiftListVM>();
-            builder.Services.AddSingleton<WeddingDetailsVM>();
-            builder.Services.AddSingleton<SeatGuestPopupVM>();
+            builder.Services.AddTransient<CompleteRegistrationVM>();
+            builder.Services.AddTransient<SeatingArrangementVM>();
+            builder.Services.AddTransient<GiftListVM>();
+            builder.Services.AddTransient<WeddingDetailsVM>();
+            builder.Services.AddTransient<SeatGuestPopupVM>();
+            builder.Services.AddTransient<SettingsVM>();
+            builder.Services.AddTransient<ManageGuestsVM>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
