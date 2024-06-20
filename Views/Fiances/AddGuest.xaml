@@ -4,14 +4,15 @@
              x:Class="Wedding_Planning_App.Views.Fiances.AddGuest"
              xmlns:vm="clr-namespace:Wedding_Planning_App.ViewModels.Fiances"
              xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
-             Title="AddGuest">
+             xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
+             Title="Add Guest">
     <!--<ContentPage.BindingContext>
         <vm:AddGuestVM />
     </ContentPage.BindingContext>-->
     <VerticalStackLayout Padding="20">
         <!-- Segmented Control for Switching Sections -->
         <buttons:SfSegmentedControl x:Name="segmentedControl"
-                                    SelectionChanged="OnSegmentSelectionChanged" 
+                                    SelectionChanged="OnSegmentSelectionChanged"                                   
                                     Margin="0,0,0,20"
                                     SegmentWidth="150"
                                     BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
@@ -55,7 +56,6 @@
             <Entry Placeholder="Phone Number" Text="{Binding NewGuestPhoneNumber}" Keyboard="Telephone"/>
             <Entry Placeholder="Dietary Restrictions" Text="{Binding NewGuestDietaryRestrictions}" />
         </StackLayout>
-
 
         <!-- Add Guest Button -->
         <Button Text="Add Guest" Command="{Binding AddGuestCommand}" />

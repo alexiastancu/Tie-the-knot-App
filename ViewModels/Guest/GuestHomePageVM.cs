@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wedding_Planning_App.Data.Enums;
 using Wedding_Planning_App.Models;
 using Wedding_Planning_App.Services.Interfaces;
 using Wedding_Planning_App.Views.Guest;
@@ -54,8 +55,19 @@ namespace Wedding_Planning_App.ViewModels.Guest
                 return;
             }
             Guest = await _guestService.GetGuestByUserIdAsync(userId);
-            var weddingIds = await _weddingGuestIntermediateService.GetWeddingsByGuestIdAsync(Guest.Id);
-            var weddings = await _weddingService.GetWeddingsByIdsAsync(weddingIds);
+            if (Guest == null)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "Guest not found", "OK");
+                return;
+            }
+
+            var weddingGuestIntermediates = await _weddingGuestIntermediateService.GetWeddingsByGuestIdAsync(Guest.Id);
+            var acceptedWeddings = weddingGuestIntermediates
+                .Where(wg => wg.InvitationStatus == InvitationStatus.Accepted)
+                .Select(wg => wg.WeddingId)
+                .ToList();
+
+            var weddings = await _weddingService.GetWeddingsByIdsAsync(acceptedWeddings);
             GuestWeddings = new ObservableCollection<Wedding>(weddings);
         }
 

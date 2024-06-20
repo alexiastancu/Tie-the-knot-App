@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wedding_Planning_App.Data.Enums;
 
 namespace Wedding_Planning_App.Models
 {
@@ -18,6 +19,8 @@ namespace Wedding_Planning_App.Models
 
         [ForeignKey("Guest")]
         public int GuestId { get; set; }
+        public InvitationStatus InvitationStatus { get; set; }
+
 
         [Ignore]
         public Wedding Wedding { get; set; }

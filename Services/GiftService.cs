@@ -28,6 +28,7 @@ namespace Wedding_Planning_App.Services
         {
             await _connection.SetUpDb();
             await _connection._connection.InsertAsync(gift);
+            var giftList = await _connection._connection.Table<Gift>().ToListAsync();
         }
 
         public async Task UpdateGiftAsync(Gift gift)

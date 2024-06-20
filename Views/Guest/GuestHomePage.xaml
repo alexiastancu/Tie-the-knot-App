@@ -18,10 +18,10 @@
         <CollectionView ItemsSource="{Binding GuestWeddings}" >
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="10" BackgroundColor="{StaticResource Quaternary}">
+                    <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="10" BackgroundColor="{StaticResource Primary}">
                         <StackLayout>
-                            <Label Text="{Binding FiancesId, Converter={StaticResource FiancesNameConverter}}" FontAttributes="Bold" TextColor="Black" FontSize="22" HorizontalTextAlignment="Center"/>
-                            <Label Text="{Binding WeddingDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" TextColor="Black" FontSize="18" />
+                            <Label Text="{Binding FiancesId, Converter={StaticResource FiancesNameConverter}}" FontAttributes="Bold" TextColor="White" FontSize="22" HorizontalTextAlignment="Center"/>
+                            <Label Text="{Binding WeddingDate, StringFormat='{0:dd/MM/yyyy}'}" FontAttributes="Bold" TextColor="White" FontSize="18" />
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding BindingContext.WeddingSelectedCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" CommandParameter="{Binding .}" />
                             </StackLayout.GestureRecognizers>

@@ -12,6 +12,7 @@ using Wedding_Planning_App.Services.Interfaces;
 using CommunityToolkit.Maui.Views;
 using Microsoft.Maui.Controls;
 using System.Diagnostics;
+using Wedding_Planning_App.Data.Enums;
 
 namespace Wedding_Planning_App.ViewModels.Fiances
 {
@@ -19,16 +20,17 @@ namespace Wedding_Planning_App.ViewModels.Fiances
     {
         private readonly IGuestService _guestService;
         private readonly IGuestSeatService _guestSeatService;
+        private readonly IWeddingGuestService _weddingGuestService;
         private readonly Popup _popup;
 
         [ObservableProperty]
         private string searchQuery;
 
         [ObservableProperty]
-        private ObservableCollection<Models.Guest> filteredGuests;
+        private ObservableCollection<WeddingGuestIntermediate> filteredGuests;
 
         [ObservableProperty]
-        private Models.Guest selectedGuest;
+        private WeddingGuestIntermediate selectedGuestIntermediate;
 
         [ObservableProperty]
         private GuestSeat guestSeat;
@@ -38,9 +40,10 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         {
             _guestService = MauiProgram.CreateMauiApp().Services.GetRequiredService<IGuestService>();
             _guestSeatService = MauiProgram.CreateMauiApp().Services.GetRequiredService<IGuestSeatService>();
+            _weddingGuestService = MauiProgram.CreateMauiApp().Services.GetRequiredService<IWeddingGuestService>();
             _popup = popup;
             guestSeat = _guestSeat;
-            FilteredGuests = new ObservableCollection<Models.Guest>();
+            FilteredGuests = new ObservableCollection<WeddingGuestIntermediate>();
 
             // Load all guests initially
             LoadGuests();
@@ -56,8 +59,15 @@ namespace Wedding_Planning_App.ViewModels.Fiances
                 Debug.WriteLine("Error retrieving weddingId from SecureStorage or converting it to int");
                 return;
             }
-            var unassignedGuests = await _guestService.GetUnassignedGuestsByWeddingIdAsync(weddingId);
-            FilteredGuests = new ObservableCollection<Models.Guest>(unassignedGuests);
+            //var unassignedGuests = await _guestService.GetUnassignedGuestsByWeddingIdAsync(weddingId);
+            //FilteredGuests = new ObservableCollection<Models.Guest>(unassignedGuests);
+
+            var unassignedGuests = await _weddingGuestService.GetUnassignedGuestsByWeddingIdAsync(weddingId);
+            var acceptedGuests = unassignedGuests
+                .Where(wg => wg.InvitationStatus == InvitationStatus.Accepted)
+                .ToList();
+
+            FilteredGuests = new ObservableCollection<WeddingGuestIntermediate>(acceptedGuests);
         }
 
         [RelayCommand]
@@ -69,22 +79,22 @@ namespace Wedding_Planning_App.ViewModels.Fiances
             }
             else
             {
-                var filtered = FilteredGuests.Where(g => g.User.Name.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                                                        g.User.Surname.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                                                        g.User.Email.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
-                FilteredGuests = new ObservableCollection<Models.Guest>(filtered);
+                var filtered = FilteredGuests.Where(wg => wg.Guest.User.Name.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                                                          wg.Guest.User.Surname.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                                                          wg.Guest.User.Email.Contains(SearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+                FilteredGuests = new ObservableCollection<WeddingGuestIntermediate>(filtered);
             }
         }
 
         [RelayCommand]
         private async void OnConfirm()
         {
-            if (SelectedGuest != null)
+            if (SelectedGuestIntermediate != null)
             {
-                guestSeat.GuestId = SelectedGuest.Id;
+                guestSeat.GuestId = SelectedGuestIntermediate.Guest.Id;
                 guestSeat.IsOccupied = true;
                 await _guestSeatService.UpdateGuestSeatAsync(guestSeat);
-                _popup.Close(SelectedGuest);
+                _popup.Close(SelectedGuestIntermediate.Guest);
             }
         }
 

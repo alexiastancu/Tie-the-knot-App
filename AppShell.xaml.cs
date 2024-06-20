@@ -52,6 +52,7 @@ namespace Wedding_Planning_App
                     break;
                 case UserRoles.Guest:
                     AddFlyoutItem("Home", "home.png", typeof(GuestHomePage));
+                    AddFlyoutItem("View Pending invitations", "invite.png", typeof(PendingInvitations));
                     break;
                 default:
                     break;

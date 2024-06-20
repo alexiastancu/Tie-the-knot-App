@@ -4,7 +4,7 @@
              x:Class="Wedding_Planning_App.Views.SignIn"
              xmlns:viewModels="clr-namespace:Wedding_Planning_App.ViewModels"
              BindingContext="SignInVM.cs"
-             Title="SignIn">
+             Title="Sign In">
     <VerticalStackLayout HorizontalOptions="FillAndExpand"
                          VerticalOptions="FillAndExpand"
                          Spacing="20"

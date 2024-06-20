@@ -4,7 +4,7 @@
              x:Class="Wedding_Planning_App.Views.SignUp"
              xmlns:vm="clr-namespace:Wedding_Planning_App.ViewModels"
              xmlns:dataForm="clr-namespace:Syncfusion.Maui.DataForm;assembly=Syncfusion.Maui.DataForm"
-             Title="SignUp">
+             Title="Sign Up">
 
     <ContentPage.BindingContext>
         <vm:SignUpVM />
@@ -33,12 +33,12 @@
                 <dataForm:DataFormTextItem FieldName="Surname" PlaceholderText="Surname"/>
                 <dataForm:DataFormTextItem FieldName="Email" PlaceholderText="Email"/>
                 <dataForm:DataFormPasswordItem FieldName="Password" PlaceholderText="Password"/>
-                <dataForm:DataFormMaskedTextItem FieldName="PhoneNumber" PlaceholderText="Phone Number" Mask="+00 000 000 000" MaskType="Simple"/>
+                <dataForm:DataFormMaskedTextItem FieldName="PhoneNumber" PlaceholderText="Phone Number" Mask="+00 000 000 000" MaskType="Simple" Keyboard="Telephone"/>
 
-                <dataForm:DataFormTextItem FieldName="HusbandName" PlaceholderText="Future husband's name" IsVisible="{Binding HusbandNameIsVisible}"/>
-                <dataForm:DataFormTextItem FieldName="HusbandSurname" PlaceholderText="Future husband's surname" IsVisible="{Binding HusbandNameIsVisible}"/>
-                <dataForm:DataFormTextItem FieldName="WifeName" PlaceholderText="Future wife's name" IsVisible="{Binding HusbandNameIsVisible}"/>
-                <dataForm:DataFormTextItem FieldName="WifeSurname" PlaceholderText="Future wife's surname" IsVisible="{Binding HusbandNameIsVisible}"/>
+                <dataForm:DataFormTextItem FieldName="HusbandName" PlaceholderText="Groom's name" IsVisible="{Binding HusbandNameIsVisible}"/>
+                <dataForm:DataFormTextItem FieldName="HusbandSurname" PlaceholderText="Groom's surname" IsVisible="{Binding HusbandNameIsVisible}"/>
+                <dataForm:DataFormTextItem FieldName="WifeName" PlaceholderText="Bride's name" IsVisible="{Binding HusbandNameIsVisible}"/>
+                <dataForm:DataFormTextItem FieldName="WifeSurname" PlaceholderText="Bride's surname" IsVisible="{Binding HusbandNameIsVisible}"/>
 
                 <dataForm:DataFormTextItem FieldName="ServiceDescription" PlaceholderText="Service Description" IsVisible="{Binding ServiceDescriptionIsVisible}"/>
                 <dataForm:DataFormTextItem FieldName="Category" PlaceholderText="Category" IsVisible="{Binding CategoryIsVisible}"/>

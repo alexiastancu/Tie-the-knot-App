@@ -97,6 +97,9 @@
 	  <MauiXaml Update="Views\Fiances\SeatingArrangement.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Guest\PendingInvitations.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Guest\WeddingDetails.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

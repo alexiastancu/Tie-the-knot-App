@@ -10,12 +10,12 @@
                    Text="{Binding SearchQuery}" 
                    SearchCommand="{Binding SearchCommand}" />
 
-        <CollectionView ItemsSource="{Binding FilteredGuests}" SelectionMode="Single" SelectedItem="{Binding SelectedGuest}">
+        <CollectionView ItemsSource="{Binding FilteredGuests}" SelectionMode="Single" SelectedItem="{Binding SelectedGuestIntermediate}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Horizontal" Padding="10">
-                        <Label Text="{Binding User.Name}" VerticalOptions="Center" Margin="0,0,2,0"/>
-                        <Label Text="{Binding User.Surname}" VerticalOptions="Center" />
+                        <Label Text="{Binding Guest.User.Name}" VerticalOptions="Center" Margin="0,0,2,0"/>
+                        <Label Text="{Binding Guest.User.Surname}" VerticalOptions="Center" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

@@ -137,7 +137,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
                 var newGuest = new Models.Guest
                 {
                     DietaryRestrictions = NewGuestDietaryRestrictions,
-                    UserId = newUser.Id
+                    UserId = newUser.Id,
                 };
 
                 await _guestService.AddGuestAsync(newGuest);

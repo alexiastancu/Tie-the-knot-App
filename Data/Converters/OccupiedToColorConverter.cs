@@ -13,7 +13,8 @@ namespace Wedding_Planning_App.Data.Converters
         {
             if (value is bool isOccupied)
             {
-                return isOccupied ? Colors.Red : Colors.Green; 
+                var red = (Color)Application.Current.Resources["Red"];
+                return isOccupied ? red : Colors.Green; 
             }
             return Colors.Blue;
         }

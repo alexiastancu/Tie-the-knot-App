@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wedding_Planning_App.Data.Enums;
 using Wedding_Planning_App.Models;
 using Wedding_Planning_App.Services.Interfaces;
 using Wedding_Planning_App.Views.Fiances;
@@ -19,6 +20,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         private readonly IWeddingTableService _weddingTableService;
         private readonly IGuestSeatService _guestSeatService;
         private readonly IGuestService _guestService;
+        private readonly IWeddingGuestService _weddingGuestService;
 
         #region Properties
         [ObservableProperty]
@@ -45,11 +47,12 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         private bool shouldRefreshUI;
         #endregion
 
-        public SeatingArrangementVM(IWeddingTableService weddingTableService, IGuestSeatService guestSeatService, IGuestService guestService)
+        public SeatingArrangementVM(IWeddingTableService weddingTableService, IGuestSeatService guestSeatService, IGuestService guestService, IWeddingGuestService weddingGuestService)
         {
             _weddingTableService = weddingTableService;
             _guestSeatService = guestSeatService;
             _guestService = guestService;
+            _weddingGuestService = weddingGuestService;
             IsTableSelected = false;
             isAssignButtonVisible = false;
             LoadTables();
@@ -70,10 +73,12 @@ namespace Wedding_Planning_App.ViewModels.Fiances
                 Debug.WriteLine("Error retrieving weddingId from SecureStorage or converting it to int");
                 return;
             }
-            var guests = await _guestService.GetGuestsByWeddingIdAsync(weddingId);
+            var guests = await _weddingGuestService.GetGuestsByWeddingIdAsync(weddingId);
 
-            // Calculează numărul de mese necesare
-            int numberOfGuests = guests.Count;
+            var acceptedGuests = guests.Where(g => g.InvitationStatus == InvitationStatus.Accepted).ToList();
+
+            // Calculate the number of tables needed
+            int numberOfGuests = acceptedGuests.Count;
             int numberOfTables = (int)Math.Ceiling(numberOfGuests / 8.0);
 
             // Creează mesele și locurile dacă nu există deja
@@ -141,14 +146,6 @@ namespace Wedding_Planning_App.ViewModels.Fiances
             //SelectedGuestName = seat.GuestId?.ToString() ?? "This seat is not occupied";
             SelectedSeat = seat;
             isAssignButtonVisible = true;
-
-            //SelectedGuestName = seat?.Guest.User.Name + " " + seat?.Guest.User.Surname ?? "this seat is not occupied";
-            //SelectedGuestName = seat?.GuestId.ToString() ?? "this seat is not occupied";
-            //SelectedSeat = seat;
-            //var popup = new SeatGuestPopup(seat);
-            //var result = await Application.Current.MainPage.ShowPopupAsync(popup);
-            //await LoadSeats(SelectedTable);
-            //ShouldRefreshUI = !ShouldRefreshUI;
         }
 
         [RelayCommand]

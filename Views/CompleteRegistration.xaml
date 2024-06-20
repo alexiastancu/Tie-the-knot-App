@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wedding_Planning_App.Views.CompleteRegistration"
-             Title="CompleteRegistration">
+             Title="Complete Registration">
     <VerticalStackLayout Padding="20">
         <Label Text="Insert the email on your invitation and choose a new password" FontAttributes="Bold" Margin="0,0,0,20" FontSize="20"/>
         <HorizontalStackLayout>

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite;
+using Wedding_Planning_App.Data.Enums;
 
 namespace Wedding_Planning_App.Models
 {
@@ -21,7 +22,5 @@ namespace Wedding_Planning_App.Models
         public string DietaryRestrictions { get; set; }
         [Ignore]
         public ICollection<Wedding> Weddings { get; set; }
-        [Ignore]
-        public ICollection<Gift> GuestGifts { get; set; }
     }
 }

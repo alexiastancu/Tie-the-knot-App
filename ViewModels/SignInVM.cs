@@ -76,6 +76,8 @@ namespace Wedding_Planning_App.ViewModels
                     if (hasWedding != 0)
                     {
                         await SecureStorage.SetAsync("weddingId", hasWedding.ToString());
+                        ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
+
                         //await Shell.Current.GoToAsync(nameof(FiancesHomePage),
                         //    new Dictionary<string, object>
                         //    {
@@ -90,9 +92,12 @@ namespace Wedding_Planning_App.ViewModels
                             {
                                 ["User"] = user
                             });
+                        return true;
                     }
                     break;
                 case UserRoles.Vendor:
+                    ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
+
                     //await Shell.Current.GoToAsync(nameof(VendorHomePage),
                     //        new Dictionary<string, object>
                     //        {
@@ -100,6 +105,8 @@ namespace Wedding_Planning_App.ViewModels
                     //        });
                     break;
                 case UserRoles.Admin:
+                    ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
+
                     //await Shell.Current.GoToAsync(nameof(AdminHomePage),
                     //        new Dictionary<string, object>
                     //        {
@@ -107,6 +114,8 @@ namespace Wedding_Planning_App.ViewModels
                     //        });
                     break;
                 case UserRoles.Guest:
+                    ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
+
                     //await Shell.Current.GoToAsync(nameof(GuestHomePage),
                     //        new Dictionary<string, object>
                     //        {
@@ -114,7 +123,6 @@ namespace Wedding_Planning_App.ViewModels
                     //        });
                     break;
             }
-            ((AppShell)Application.Current.MainPage).OnLoginStatusChanged(user.Role);
 
             return true;
         }

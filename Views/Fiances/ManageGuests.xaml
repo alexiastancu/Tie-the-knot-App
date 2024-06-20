@@ -3,27 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Wedding_Planning_App.Views.Fiances.ManageGuests"
              xmlns:vm="clr-namespace:Wedding_Planning_App.ViewModels.Fiances"
-             Title="View Guests">
+             xmlns:converters="clr-namespace:Wedding_Planning_App.Data.Converters"
+             Title="Manage Guests"
+             x:Name="Page">
+
     <ContentPage.BindingContext>
         <vm:ManageGuestsVM />
     </ContentPage.BindingContext>
 
-    <StackLayout Padding="20" Spacing="10">
-        <Label Text="Guest List" FontSize="30" FontAttributes="Bold" HorizontalOptions="Center" />
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InvitationStatusToColorConverter x:Key="InvitationStatusToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
+
+    <StackLayout Padding="20" Spacing="10">
         <ListView ItemsSource="{Binding Guests}" SelectionMode="None" HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Frame CornerRadius="10" Padding="10" Margin="0,5" BorderColor="LightGray">
-                            <StackLayout Orientation="Horizontal" Spacing="10">
-                                <StackLayout Orientation="Horizontal" VerticalOptions="Center" Spacing="10">
-                                    <Label Text="{Binding User.Name}" FontSize="20" FontAttributes="Bold"/>
-                                    <Label Text="{Binding User.Surname}" FontSize="20" FontAttributes="Bold"/>
-                                </StackLayout>
-                                <!--<Button Text="Delete" Command="{Binding Path=BindingContext.DeleteGuestCommand, Source={x:Reference Name=ManageGuestsPage}}" CommandParameter="{Binding .}" BackgroundColor="Red" TextColor="White" VerticalOptions="Center"/>-->
+                        <Grid BackgroundColor="{Binding InvitationStatus,Converter={StaticResource InvitationStatusToColorConverter}}" RowDefinitions="Auto, Auto, Auto" Margin="0,5" Padding="10">
+                            <StackLayout Grid.Row="0" Orientation="Horizontal" Spacing="5" VerticalOptions="Center">
+                                <Label Text="{Binding Guest.User.Name, StringFormat='Guest name: {0}'}" FontSize="18" FontAttributes="None"/>
+                                <Label Text="{Binding Guest.User.Surname}" FontSize="18" FontAttributes="None"/>
                             </StackLayout>
-                        </Frame>
+                            <Label Grid.Row="1"  Text="{Binding Guest.User.Email, StringFormat='Guest email: {0}'}" FontSize="18"/>
+                            <StackLayout Grid.Row="2" Orientation="Vertical" Spacing="10" VerticalOptions="Center">
+                                <Label Text="{Binding InvitationStatus, StringFormat='Status: {0}'}" FontSize="18" TextColor="Black" FontAttributes="None"/>
+                                <Button Text="Delete" WidthRequest="100" Command="{Binding Source={x:Reference Page}, Path=BindingContext.DeleteGuestCommand}" CommandParameter="{Binding .}" TextColor="White" VerticalOptions="Center" />
+                            </StackLayout>
+                        </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -9,4 +9,16 @@ public partial class ManageGuests : ContentPage
 		InitializeComponent();
         BindingContext = vm;
     }
+
+    //protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    //{
+    //    base.OnNavigatedTo(args);
+    //    (BindingContext as ManageGuestsVM).LoadGuests();
+    //}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        (BindingContext as ManageGuestsVM).LoadGuests();
+    }
 }

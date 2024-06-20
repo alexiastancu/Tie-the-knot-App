@@ -13,6 +13,6 @@ public partial class SeatingArrangement : ContentPage
     protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
-        //await (BindingContext as SeatingArrangementVM).LoadTables();
+        await (BindingContext as SeatingArrangementVM).LoadTables();
     }
 }

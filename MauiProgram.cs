@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Wedding_Planning_App.Models;
 using Wedding_Planning_App.ViewModels;
 using SQLite;
-using MenuItem = Wedding_Planning_App.Models.MenuItem;
 using Wedding_Planning_App.Services;
 using Wedding_Planning_App.Views;
 using Microsoft.Maui.ApplicationModel;
@@ -58,6 +57,7 @@ namespace Wedding_Planning_App
             builder.Services.AddTransient<WeddingDetails>();
             builder.Services.AddTransient<Settings>();
             builder.Services.AddTransient<ManageGuests>();
+            builder.Services.AddTransient<PendingInvitations>();
 
 
             builder.Services.AddTransient<SignUpVM>();
@@ -73,6 +73,7 @@ namespace Wedding_Planning_App
             builder.Services.AddTransient<SeatGuestPopupVM>();
             builder.Services.AddTransient<SettingsVM>();
             builder.Services.AddTransient<ManageGuestsVM>();
+            builder.Services.AddTransient<PendingInvitationsVM>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

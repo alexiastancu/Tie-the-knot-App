@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wedding_Planning_App.Models;
 using Wedding_Planning_App.Services.Interfaces;
 
 namespace Wedding_Planning_App.ViewModels.Fiances
@@ -21,23 +22,22 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         {
             
         }
-        public ManageGuestsVM(IGuestService guestService, IUserService userService, IWeddingGuestService weddingGuestService)
+        public ManageGuestsVM(IGuestService guestService, IWeddingGuestService weddingGuestService)
         {
             _guestService = guestService;
-            _userService = userService;
             _weddingGuestService = weddingGuestService;
             LoadGuests();
         }
 
         [ObservableProperty]
-        private ObservableCollection<Models.Guest> guests;
+        private ObservableCollection<WeddingGuestIntermediate> guests;
 
         [ObservableProperty]
         private Models.Guest selectedGuest;
 
         private int weddingId;
 
-        private async void LoadGuests()
+        public async void LoadGuests()
         {
             try
             {
@@ -47,8 +47,8 @@ namespace Wedding_Planning_App.ViewModels.Fiances
                     await Application.Current.MainPage.DisplayAlert("Error", "There was a problem retrieving the wedding, try again later", "OK");
                     Debug.WriteLine("Error retrieving weddingId from SecureStorage or converting it to int");
                 }
-                var guestList = await _guestService.GetGuestsByWeddingIdAsync(weddingId);
-                Guests = new ObservableCollection<Models.Guest>(guestList);
+                var guestList = await _weddingGuestService.GetGuestsByWeddingIdAsync(weddingId);
+                Guests = new ObservableCollection<WeddingGuestIntermediate>(guestList);
 
             }
             catch (Exception ex)
@@ -58,16 +58,19 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         }
 
         [RelayCommand]
-        private async Task DeleteGuest(Models.Guest guest)
+        private async Task DeleteGuest(WeddingGuestIntermediate weddingGuest)
         {
             bool confirm = await Shell.Current.DisplayAlert("Confirm", "Are you sure you want to delete this guest?", "Yes", "No");
             if (confirm)
             {
                 try
                 {
-                    await _weddingGuestService.RemoveGuestFromWeddingAsync(guest.Id, weddingId);
-                    //LoadGuests();
-                    Guests.Remove(guest);
+                    if (weddingGuest == null)
+                    {
+                        return;
+                    }
+                    await _weddingGuestService.RemoveGuestFromWeddingAsync(weddingId, weddingGuest.GuestId);
+                    Guests.Remove(weddingGuest);
                     var tempGuests = Guests;
                     Guests = null;
                     Guests = tempGuests;
