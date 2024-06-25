@@ -45,11 +45,11 @@ public partial class GiftList : ContentPage
         }
     }
 
-    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    protected override async void OnNavigatedTo(NavigatedToEventArgs args)
     {
         base.OnNavigatedTo(args);
         ((GiftListVM)BindingContext).WeddingId = WeddingId;
-        ((GiftListVM)BindingContext).LoadUserRole();
-        ((GiftListVM)BindingContext).LoadGifts();
+        await ((GiftListVM)BindingContext).LoadUserRole();
+        await ((GiftListVM)BindingContext).LoadGifts();
     }
 }

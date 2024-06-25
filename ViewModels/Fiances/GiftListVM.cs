@@ -55,7 +55,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         [RelayCommand]
         public async Task LoadGifts()
         {
-            if(isFiance)
+            if(IsFiance)
             {
                 bool conversionSucceded = int.TryParse(await SecureStorage.GetAsync("weddingId"), out weddingId);
                 if (!conversionSucceded)
@@ -123,7 +123,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
             }
         }
 
-        public async void LoadUserRole()
+        public async Task LoadUserRole()
         {
             bool conversionSucceded = int.TryParse(await SecureStorage.GetAsync("userId"), out int userId);
             if (!conversionSucceded)
@@ -177,8 +177,7 @@ namespace Wedding_Planning_App.ViewModels.Fiances
                 }
                 catch (Exception ex)
                 {
-                    // Handle exception
-                    await Application.Current.MainPage.DisplayAlert("Error", "Unable to open link", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Unable to open link", ex.Message, "OK");
                 }
             }
         }

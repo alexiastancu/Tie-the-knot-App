@@ -24,6 +24,7 @@
                 <StackLayout>
                     <Label Text="Location" FontAttributes="Bold" FontSize="25" />
                     <maps:Map x:Name="map" HeightRequest="400" WidthRequest="350" IsZoomEnabled="True" />
+                    <Button Text="Open in Google Maps" Command="{Binding OpenGoogleMapsCommand}" Margin="10,8,0,0" WidthRequest="200" HorizontalOptions="End"/>
                 </StackLayout>
             </Frame>
 
@@ -110,11 +111,11 @@
             </Frame>
 
             <!-- Navigate to Gift List -->
-            <Frame CornerRadius="10" Padding="10" Margin="0,10">
-                <StackLayout>
+            <!--<Frame CornerRadius="10" Padding="10" Margin="0,10">-->
+                <!--<StackLayout>-->
                     <Button Text="View Gift List" Command="{Binding NavigateToGiftListCommand}" BackgroundColor="{StaticResource Primary}" TextColor="White" CornerRadius="10" Margin="10" WidthRequest="150" HorizontalOptions="Center"/>
-                </StackLayout>
-            </Frame>
+                <!--</StackLayout>-->
+            <!--</Frame>-->
 
         </StackLayout>
     </ScrollView>

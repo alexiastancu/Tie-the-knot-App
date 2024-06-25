@@ -12,6 +12,7 @@ using Wedding_Planning_App.Views.Fiances;
 using Microsoft.Maui.Controls.Maps;
 using Microsoft.Maui.Maps;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Wedding_Planning_App.ViewModels.Guest
 {
@@ -92,7 +93,7 @@ namespace Wedding_Planning_App.ViewModels.Guest
             var guest = await _guestService.GetGuestByUserIdAsync(userId);
             if (guest != null)
             {
-                GuestSeat = await _guestSeatService.GetGuestSeatByGuestIdAsync(guest.Id);
+                GuestSeat = await _guestSeatService.GetGuestSeatByGuestIdAsync(guest.Id, wedding.Id);
                 if (GuestSeat != null)
                 {
                     GuestTable = await _weddingTableService.GetTableByIdAsync(GuestSeat.TableId);
@@ -101,6 +102,18 @@ namespace Wedding_Planning_App.ViewModels.Guest
                 }
             }
 
+        }
+
+        [RelayCommand]
+        private async Task OpenGoogleMaps()
+        {
+            if (Location != null)
+            {
+                var lat = Location.Latitude.ToString(CultureInfo.InvariantCulture);
+                var lng = Location.Longitude.ToString(CultureInfo.InvariantCulture);
+                var uri = new Uri($"https://www.google.com/maps/search/?api=1&query={lat} {lng}");
+                await Launcher.Default.OpenAsync(uri);
+            }
         }
 
         [RelayCommand]

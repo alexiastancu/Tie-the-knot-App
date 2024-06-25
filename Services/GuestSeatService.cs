@@ -24,13 +24,32 @@ namespace Wedding_Planning_App.Services.Interfaces
 
         }
 
-        public async Task<GuestSeat> GetGuestSeatByGuestIdAsync(int guestId)
+        public async Task<GuestSeat?> GetGuestSeatByGuestIdAsync(int guestId, int weddingId)
         {
             await _connection.SetUpDb();
-            return await _connection._connection.Table<GuestSeat>()
-                                    .Where(gs => gs.GuestId == guestId)
-                                    .FirstOrDefaultAsync();
+
+            // Retrieve all GuestSeats for the given guestId
+            var guestSeats = await _connection._connection.Table<GuestSeat>()
+                                                        .Where(gs => gs.GuestId == guestId)
+                                                        .ToListAsync();
+
+            // Iterate through each GuestSeat and fetch the associated WeddingTable
+            foreach (var guestSeat in guestSeats)
+            {
+                // Fetch the associated WeddingTable that matches TableId and WeddingId
+                var table = await _connection._connection.Table<WeddingTable>()
+                                                              .Where(wt => wt.Id == guestSeat.TableId && wt.WeddingId == weddingId)
+                                                              .FirstOrDefaultAsync();
+                if(table != null)
+                {
+                    guestSeat.Table = table;
+                    return guestSeat;
+                }
+            }
+            return null;
         }
+
+
 
         public async Task<List<GuestSeat>> GetSeatsByTableIdAsync(int tableId)
         {

@@ -15,7 +15,8 @@
                 Title="Select Role"
                 SelectedItem="{Binding SelectedRole}"
                 TextColor="Black"
-                TitleColor="Black">
+                TitleColor="Black"
+                BackgroundColor="{StaticResource Primary}">
             <Picker.Items>
                 <x:String>Fiancés</x:String>
                 <x:String>Vendor</x:String>

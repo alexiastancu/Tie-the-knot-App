@@ -10,7 +10,7 @@
     Title="Wedding_Planning_App"
     BackgroundColor="{StaticResource Tertiary}">
     <Shell.Behaviors>
-        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Tertiary}"/>
+        <toolkit:StatusBarBehavior StatusBarColor="{StaticResource Tertiary}" StatusBarStyle="DarkContent"/>
     </Shell.Behaviors>
     <Shell.FlyoutHeader>
         <Grid ColumnDefinitions="Auto, *">

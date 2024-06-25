@@ -26,6 +26,7 @@ namespace Wedding_Planning_App.Services
         public async Task<Guest> GetGuestByUserIdAsync(int userId)
         {
             await _connection.SetUpDb();
+            var list = await _connection._connection.Table<Guest>().ToListAsync();
             return await _connection._connection.Table<Guest>().Where(g => g.UserId == userId).FirstOrDefaultAsync();
         }
 

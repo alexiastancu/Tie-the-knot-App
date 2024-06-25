@@ -21,6 +21,7 @@ namespace Wedding_Planning_App.Services
         public async Task<List<Gift>> GetGiftsByWeddingIdAsync(int weddingId)
         {
             await _connection.SetUpDb();
+            var list = await _connection._connection.Table<Gift>().ToListAsync();
             return await _connection._connection.Table<Gift>().Where(g => g.WeddingId == weddingId).ToListAsync();
         }
 

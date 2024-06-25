@@ -16,6 +16,11 @@
                                     Margin="0,0,0,20"
                                     SegmentWidth="150"
                                     BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
+            <buttons:SfSegmentedControl.SelectionIndicatorSettings>
+                <buttons:SelectionIndicatorSettings 
+                SelectionIndicatorPlacement="Fill"
+                Background="{StaticResource Secondary}"/>
+            </buttons:SfSegmentedControl.SelectionIndicatorSettings>
             <buttons:SfSegmentedControl.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Existing Guest</x:String>
