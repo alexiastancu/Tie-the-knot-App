@@ -12,8 +12,6 @@ namespace Wedding_Planning_App.ViewModels.Fiances
     [QueryProperty(nameof(User), nameof(User))]
     public partial class FiancesHomepageVM : ObservableRecipient
     {
-        private System.Timers.Timer _timer;
-
         private readonly IWeddingService _weddingService;
 
         #region Properties
@@ -40,49 +38,41 @@ namespace Wedding_Planning_App.ViewModels.Fiances
         {
             _weddingService = new WeddingService();
 
-            StartCountdown();
+            CalculateTimeRemaining();
         }
 
-        public async void StartCountdown()
+        public async void CalculateTimeRemaining()
         {
-            bool conversionSucceded = int.TryParse(await SecureStorage.GetAsync("weddingId"), out int weddingId);
-            if (!conversionSucceded)
+            bool conversionSucceeded = int.TryParse(await SecureStorage.GetAsync("weddingId"), out int weddingId);
+            if (!conversionSucceeded)
             {
                 await Application.Current.MainPage.DisplayAlert("Error", "There was a problem retrieving the wedding, try again later", "OK");
                 Debug.WriteLine("Error retrieving weddingId from SecureStorage or converting it to int");
                 return;
             }
+
             WeddingDate = (await _weddingService.GetWeddingByIdAsync(weddingId)).WeddingDate;
 
-            _timer = new System.Timers.Timer(1000);
-            _timer.Elapsed += TimerElapsed;
-            _timer.Start();
-        }
-
-        private void TimerElapsed(object sender, ElapsedEventArgs e)
-        {
             var now = DateTime.Now;
             var timeSpan = WeddingDate - now;
             if (timeSpan.TotalSeconds > 0)
             {
-                var weddingDate = WeddingDate;
-
-                Years = weddingDate.Year - now.Year;
-                if (weddingDate.Month < now.Month || (weddingDate.Month == now.Month && weddingDate.Day < now.Day))
+                Years = WeddingDate.Year - now.Year;
+                if (WeddingDate.Month < now.Month || (WeddingDate.Month == now.Month && WeddingDate.Day < now.Day))
                 {
                     Years--;
                 }
 
                 var targetDate = now.AddYears(Years);
                 Months = 0;
-                while (targetDate.AddMonths(Months + 1) <= weddingDate)
+                while (targetDate.AddMonths(Months + 1) <= WeddingDate)
                 {
                     Months++;
                 }
 
                 targetDate = targetDate.AddMonths(Months);
-                Weeks = (weddingDate - targetDate).Days / 7;
-                Days = (weddingDate - targetDate).Days % 7;
+                Weeks = (WeddingDate - targetDate).Days / 7;
+                Days = (WeddingDate - targetDate).Days % 7;
             }
             else
             {
@@ -90,7 +80,6 @@ namespace Wedding_Planning_App.ViewModels.Fiances
                 Months = 0;
                 Weeks = 0;
                 Days = 0;
-                _timer.Stop();
             }
         }
     }

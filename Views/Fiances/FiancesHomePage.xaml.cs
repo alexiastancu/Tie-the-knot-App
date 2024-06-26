@@ -14,7 +14,7 @@ public partial class FiancesHomePage : ContentPage
     {
         base.OnNavigatedTo(args);
 
-        (BindingContext as FiancesHomepageVM).StartCountdown();
+        //(BindingContext as FiancesHomepageVM).StartCountdown();
 
     }
 }
